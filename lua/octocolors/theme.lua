@@ -18,11 +18,14 @@ local M = {}
 --- @param scheme? "default"
 --- @return Theme
 function M.setup(scheme)
+	local config = require("octocolors.config")
+	local options = config.options
 	--- @class Theme
 	--- @field highlights Highlights
 	local theme = {
 		scheme = scheme or "default",
 		colors = colors.setup(),
+		config = options,
 	}
 
 	local c = theme.colors

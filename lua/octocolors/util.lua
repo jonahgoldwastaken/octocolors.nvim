@@ -99,7 +99,7 @@ function M.load(theme)
 
 	M.syntax(theme.highlights)
 
-	M.autocmds()
+	M.autocmds(theme.config)
 end
 
 function M.on_color_scheme()
@@ -109,10 +109,19 @@ function M.on_color_scheme()
 	end
 end
 
-function M.autocmds()
+--- @param config Config
+function M.autocmds(config)
 	vim.cmd([[augroup OctoColors]])
 	vim.cmd([[  autocmd!]])
 	vim.cmd([[  autocmd ColorScheme * lua require("octocolors.util").on_color_scheme()]])
+	vim.cmd(
+		[[  autocmd FileType ]]
+			.. table.concat(config.sidebars, ",")
+			.. [[ setlocal winhighlight=Normal:NormalSB,SignColumn:SignColumnSB]]
+	)
+	if vim.tbl_contains(config.sidebars, "terminal") then
+		vim.cmd([[  autocmd TermOpen * setlocal winhighlight=Normal:NormalSB,SignColumn:SignColumnSB]])
+	end
 	vim.cmd([[augroup end]])
 end
 
