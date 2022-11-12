@@ -187,9 +187,14 @@ function M.setup(scheme)
 		["@function.builtin.lua"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 		["@definition.function.lua"] = { fg = light_dark(scale.purple[6], scale.purple[3]) },
 
+		-- Markdown
+		["@text.title.markdown"] = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
+		["@text.reference.markdown_inline"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
+
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
 		Bold = { bold = true },
 		Italic = { italic = true },
+		["@text.emphasis"] = { italic = true },
 
 		-- ("Ignore", below, may be invisible...)
 		-- Ignore = { }, -- (preferred) left blank, hidden  |hl-Ignore|
@@ -206,9 +211,9 @@ function M.setup(scheme)
 
 		markdownHeadingDelimiter = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
 		markdownTSTextReference = { link = "Title" },
-		markdownH1 = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
-		markdownH2 = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
-		markdownH3 = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
+		markdownH1 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
+		markdownH2 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
+		markdownH3 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
 		markdownLinkText = { fg = c.fg.default, underline = true },
 		markdownUrl = { fg = c.fg.default, underline = true },
 
