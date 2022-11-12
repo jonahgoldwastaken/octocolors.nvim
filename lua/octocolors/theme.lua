@@ -264,6 +264,16 @@ function M.setup(scheme)
 		NvimTreeFolderName = { fg = c.fg.default },
 		NvimTreeOpenedFolderName = { fg = c.fg.default, bold = true },
 		NvimTreeOpenedFile = { fg = scale.blue[3] },
+
+		-- GitGutter
+		GitGutterAdd = { fg = c.success.fg },
+		GitGutterChange = { fg = c.attention.fg },
+		GitGutterDelete = { fg = c.danger.fg },
+
+		-- GitSigns
+		GitSignsAdd = { fg = c.success.fg },
+		GitSignsChange = { fg = c.attention.fg },
+		GitSignsDelete = { fg = c.danger.fg },
 	}
 
 	return theme
