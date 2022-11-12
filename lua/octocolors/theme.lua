@@ -237,6 +237,14 @@ function M.setup(scheme)
 		DiagnosticUnderlineHint = { undercurl = true, sp = c.fg.muted }, -- Used to underline "Hint" diagnostics
 
 		LspCodeLens = { link = "Comment" },
+
+		-- ts-rainbow
+		rainbowcol1 = { fg = light_dark(scale.blue[6], scale.blue[3]) },
+		rainbowcol2 = { fg = light_dark(scale.green[6], scale.green[3]) },
+		rainbowcol3 = { fg = light_dark(scale.yellow[6], scale.yellow[3]) },
+		rainbowcol4 = { fg = light_dark(scale.red[6], scale.red[3]) },
+		rainbowcol5 = { fg = light_dark(scale.pink[6], scale.pink[3]) },
+		rainbowcol6 = { fg = light_dark(scale.purple[6], scale.purple[3]) },
 	}
 
 	return theme
