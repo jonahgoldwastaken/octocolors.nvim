@@ -276,8 +276,10 @@ function M.setup(scheme)
 		GitSignsDelete = { fg = c.danger.fg },
 
 		-- Telescope
-		TelescopeBorder = { fg = c.border.default, bg = c.canvas.overlay },
+		TelescopeBorder = { fg = c.fg.muted, bg = c.canvas.overlay },
 		TelescopeNormal = { fg = c.fg.default, bg = c.canvas.overlay },
+		TelescopeTitle = { fg = c.fg.default },
+		TelescopePromptPrefix = { fg = c.fg.default },
 	}
 
 	return theme
