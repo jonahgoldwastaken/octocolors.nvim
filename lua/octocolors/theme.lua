@@ -155,6 +155,8 @@ function M.setup(scheme)
 		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, --    you can use CTRL-] on this
 		["@tag.attribute"] = { fg = c.accent.fg },
 		["@tag.delimiter"] = { fg = c.fg.default },
+		["@tag.punctuation"] = { fg = c.fg.default },
+		["@punctuation.bracket"] = { fg = c.fg.default },
 		-- Delimiter     = { }, --  character that needs attention
 		-- SpecialComment= { }, -- special things inside a comment
 		-- Debug         = { }, --    debugging statements
