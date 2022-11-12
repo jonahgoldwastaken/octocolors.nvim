@@ -73,14 +73,14 @@ function M.setup(scheme)
 		MsgArea = { fg = c.fg.default }, -- Area for messages and cmdline
 		-- MsgSeparator= { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
 		MoreMsg = { fg = c.accent.fg }, -- |more-prompt|
-		NonText = { fg = light_dark(scale.gray[2], scale.gray[6]) }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+		NonText = { fg = light_dark(scale.gray[3], scale.gray[5]) }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 		Normal = { fg = c.fg.default, bg = c.canvas.default }, -- normal text
 		NormalNC = { fg = c.fg.default, bg = c.canvas.default }, -- normal text in non-current windows
 		NormalSB = { fg = c.fg.default, bg = c.canvas.default }, -- normal text in sidebar
 		NormalFloat = { fg = c.fg.default, bg = c.canvas.default }, -- Normal text in floating windows.
 		FloatBorder = { fg = c.border.default },
 		Pmenu = { fg = c.fg.default, bg = c.canvas.overlay }, -- Popup menu: normal item.
-		PmenuSel = { fg = c.fg.muted }, -- Popup menu: selected item.
+		PmenuSel = { fg = c.fg.default, bg = c.neutral.muted }, -- Popup menu: selected item.
 		PmenuSbar = { bg = c.canvas.overlay }, -- Popup menu: scrollbar.
 		PmenuThumb = { bg = alpha(scale.gray[5], c.canvas.default, 0.2) }, -- Popup menu: Thumb of the scrollbar.
 		Question = { fg = c.accent.fg }, -- |hit-enter| prompt and yes/no questions
@@ -104,7 +104,7 @@ function M.setup(scheme)
 		TabLineFill = { bg = c.canvas.inset }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true }, -- titles for output from ":set all", ":autocmd" etc.
-		Visual = { bg = scale.blue[7] }, -- Visual mode selection
+		Visual = { bg = scale.blue[9] }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = c.attention.fg }, -- warning messages
 		Whitespace = { fg = light_dark(scale.gray[8], scale.gray[6]) }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
