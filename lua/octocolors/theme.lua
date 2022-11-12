@@ -171,6 +171,16 @@ function M.setup(scheme)
 		["@variable.tsx"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 		["@property.tsx"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 
+		-- TOML
+		["@property.toml"] = { fg = c.fg.default },
+		["@operator.toml"] = { fg = c.fg.default },
+		["@type.toml"] = { fg = light_dark(scale.purple[6], scale.purple[3]) },
+
+		-- Lua
+		--[[ ["@function.lua"] = { fg = light_dark(scale.red[6], scale.red[4]) }, ]]
+		["@function.call.lua"] = { fg = light_dark(scale.blue[5], scale.blue[3]) },
+		["@definition.function.lua"] = { fg = light_dark(scale.purple[6], scale.purple[3]) },
+
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
 		Bold = { bold = true },
 		Italic = { italic = true },
