@@ -161,6 +161,16 @@ function M.setup(scheme)
 		-- SpecialComment= { }, -- special things inside a comment
 		-- Debug         = { }, --    debugging statements
 
+		-- Custom syntax highlighting
+		-- Typescript React
+		--[[ ["@punctuation.delimiter.ts"] = { fg = light_dark(scale.red[6], scale.red[4]) }, ]]
+		["@punctuation.delimiter.tsx"] = { fg = light_dark(scale.red[6], scale.red[4]) },
+		--[[ ["@type.ts"] = { fg = light_dark(scale.orange[7], scale.orange[3]) }, ]]
+		["@type.tsx"] = { fg = light_dark(scale.orange[7], scale.orange[3]) },
+		--[[ ["@variable.ts"] = { fg = c.fg.default }, ]]
+		["@variable.tsx"] = { fg = c.accent.fg },
+		["@property.tsx"] = { fg = c.accent.fg },
+
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
 		Bold = { bold = true },
 		Italic = { italic = true },
