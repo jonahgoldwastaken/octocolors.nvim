@@ -9,20 +9,13 @@ local octocolors = {}
 
 local function create_group(scale)
 	local group = {
-		a = { bg = scale[4], fg = bg1, gui = "bold" },
-		b = { bg = scale[8], fg = scale[1] },
+		a = { bg = util.light_dark(scale[6], scale[4]), fg = bg1, gui = "bold" },
+		b = { bg = util.light_dark(scale[7], scale[8]), fg = scale[1] },
+		c = {
+			bg = util.light_dark(scale[2], scale[10]),
+			fg = util.light_dark(scale[10], scale[1]),
+		},
 	}
-	if vim.o.background == "dark" then
-		group.c = {
-			bg = scale[10],
-			fg = scale[1],
-		}
-	else
-		group.c = {
-			fg = scale[10],
-			bg = scale[1],
-		}
-	end
 	return group
 end
 
