@@ -90,7 +90,7 @@ function M.syntax(syntax)
 end
 
 function M.load(theme)
-	if vim.g.colors_name then vim.cmd "hi clear" end
+	if vim.g.colors_name then vim.cmd("hi clear") end
 
 	vim.o.termguicolors = true
 	vim.g.colors_name = "octocolors"

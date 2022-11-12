@@ -1,5 +1,5 @@
-local colors = require "octocolors.colors"
-local util = require "octocolors.util"
+local colors = require("octocolors.colors")
+local util = require("octocolors.util")
 
 local M = {}
 
