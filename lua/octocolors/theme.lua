@@ -15,16 +15,17 @@ local M = {}
 
 --- @alias Highlights table<string,Highlight>
 
---- @param scheme? "default"
+--- @param scheme "default"|nil
 --- @return Theme
 function M.setup(scheme)
+	scheme = scheme or "default"
 	local config = require("octocolors.config")
 	local options = config.options
 	--- @class Theme
 	--- @field highlights Highlights
 	local theme = {
-		scheme = scheme or "default",
-		colors = colors.setup(),
+		scheme = scheme,
+		colors = colors.setup(options),
 		config = options,
 	}
 
@@ -45,10 +46,7 @@ function M.setup(scheme)
 		CursorLine = { bg = light_dark(scale.blue[2], scale.gray[9]) }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
 		Directory = { fg = c.accent.fg }, -- directory names (and other special names in listings)
 		DiffAdd = {
-			bg = light_dark(
-				alpha(scale.green[2], c.canvas.default, 0.3),
-				alpha(scale.green[6], c.canvas.default, 0.2)
-			),
+			bg = light_dark(scale.green[2], scale.green[6]),
 		}, -- diff mode: Added line |diff.txt|
 		DiffChange = {
 			bg = light_dark(
@@ -67,12 +65,12 @@ function M.setup(scheme)
 		-- TermCursor  = { }, -- cursor in a focused terminal
 		-- TermCursorNC= { }, -- cursor in an unfocused terminal
 		ErrorMsg = { fg = c.danger.fg }, -- error messages on the command line
-		VertSplit = { bg = c.border.default }, -- the column separating vertically split windows
-		WinSeparator = { bg = c.border.default }, -- the column separating vertically split windows
+		VertSplit = { fg = c.border.default, bg = "NONE" }, -- the column separating vertically split windows
+		WinSeparator = { fg = c.border.default, bg = "NONE" }, -- the column separating vertically split windows
 		Folded = {}, -- line used for closed folds
 		FoldColumn = {}, -- 'foldcolumn'
-		SignColumn = {}, -- column where |signs| are displayed
-		SignColumnSB = {}, -- column where |signs| are displayed
+		SignColumn = { fg = c.canvas.subtle, bg = c.canvas.default }, -- column where |signs| are displayed
+		SignColumnSB = { fg = c.canvas.subtle, bg = c.canvas.overlay }, -- column where |signs| are displayed
 		Substitute = { bg = c.attention.emphasis }, -- |:substitute| replacement text highlighting
 		LineNr = { fg = scale.gray[5] }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		CursorLineNr = { fg = c.fg.default }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
@@ -112,7 +110,7 @@ function M.setup(scheme)
 		TabLineFill = { bg = c.canvas.inset }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true }, -- titles for output from ":set all", ":autocmd" etc.
-		Visual = { bg = scale.blue[9] }, -- Visual mode selection
+		Visual = { bg = light_dark(scale.blue[2], scale.blue[9]) }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = c.attention.fg }, -- warning messages
 		Whitespace = { fg = light_dark(scale.gray[8], scale.gray[6]) }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
@@ -125,7 +123,7 @@ function M.setup(scheme)
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
 		Constant = { fg = light_dark(scale.blue[7], scale.blue[3]) }, -- (preferred) any constant
-		String = { fg = light_dark(scale.blue[9], scale.blue[2]) }, --   a string constant: "this is a string"
+		String = { fg = light_dark(scale.blue[8], scale.blue[2]) }, --   a string constant: "this is a string"
 		Character = { link = "String" }, --  a character constant: 'c', '\n'
 		-- Number        = { }, --   a number constant: 234, 0xff
 		-- Boolean       = { }, --  a boolean constant: TRUE, false
@@ -185,7 +183,8 @@ function M.setup(scheme)
 
 		-- Lua
 		--[[ ["@function.lua"] = { fg = light_dark(scale.red[6], scale.red[4]) }, ]]
-		["@function.call.lua"] = { fg = light_dark(scale.blue[5], scale.blue[3]) },
+		["@function.call.lua"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
+		["@function.builtin.lua"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 		["@definition.function.lua"] = { fg = light_dark(scale.purple[6], scale.purple[3]) },
 
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links

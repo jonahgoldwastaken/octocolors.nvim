@@ -1,7 +1,14 @@
 local M = {}
 
 --- @return string "light" or "dark"
-function M.mode() return vim.o.background == "light" and "light" or "dark" end
+function M.mode()
+	local bg = require("octocolors.config").options.background
+	if bg == "auto" then
+		return vim.o.background
+	else
+		return bg
+	end
+end
 
 function M.light_dark(light, dark) return M.mode() == "light" and light or dark end
 
@@ -69,6 +76,7 @@ function M.color_to_hex(table, bg)
 			end
 		end
 	end
+
 	if type(table) == "table" then
 		for key, value in pairs(table) do
 			if type(value) == "table" then
@@ -109,11 +117,16 @@ function M.on_color_scheme()
 	end
 end
 
+function M.on_background_change() M.load(require("octocolors.theme").setup()) end
+
 --- @param config Config
 function M.autocmds(config)
 	vim.cmd([[augroup OctoColors]])
 	vim.cmd([[  autocmd!]])
 	vim.cmd([[  autocmd ColorScheme * lua require("octocolors.util").on_color_scheme()]])
+	if config.background == "auto" then
+		vim.cmd([[  autocmd OptionSet background lua require 'octocolors.util'.on_background_change()]])
+	end
 	vim.cmd(
 		[[  autocmd FileType ]]
 			.. table.concat(config.sidebars, ",")
