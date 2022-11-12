@@ -153,7 +153,7 @@ function M.setup(scheme)
 		Special = { fg = light_dark(scale.blue[9], scale.blue[2]) }, -- (preferred) any special symbol
 		-- SpecialChar   = { }, --  special character in a constant
 		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, --    you can use CTRL-] on this
-		["@tag.attribute"] = { fg = c.accent.fg },
+		["@tag.attribute"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 		["@tag.delimiter"] = { fg = c.fg.default },
 		["@tag.punctuation"] = { fg = c.fg.default },
 		["@punctuation.bracket"] = { fg = c.fg.default },
@@ -168,8 +168,8 @@ function M.setup(scheme)
 		--[[ ["@type.ts"] = { fg = light_dark(scale.orange[7], scale.orange[3]) }, ]]
 		["@type.tsx"] = { fg = light_dark(scale.orange[7], scale.orange[3]) },
 		--[[ ["@variable.ts"] = { fg = c.fg.default }, ]]
-		["@variable.tsx"] = { fg = c.accent.fg },
-		["@property.tsx"] = { fg = c.accent.fg },
+		["@variable.tsx"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
+		["@property.tsx"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
 
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
 		Bold = { bold = true },
