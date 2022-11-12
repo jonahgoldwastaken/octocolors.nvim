@@ -3,18 +3,23 @@ local util = require("octocolors.util")
 
 local M = {}
 
--- @class Highlight
--- @field fg string|nil
--- @field bg string|nil
--- @field sp string|nil
--- @field style string|nil|Highlight
+--- @class Highlight
+--- @field fg string|nil
+--- @field bg string|nil
+--- @field sp string|nil
+--- @field bold boolean|nil
+--- @field underline boolean|nil
+--- @field italic boolean|nil
+--- @field undercurl boolean|nil
+--- @field link string|nil
 
--- @alias Highlights table<string,Highlight>
+--- @alias Highlights table<string,Highlight>
 
--- @param scheme? "default"
+--- @param scheme? "default"
+--- @return Theme
 function M.setup(scheme)
-	-- @class Theme
-	-- @field highlights Highlights
+	--- @class Theme
+	--- @field highlights Highlights
 	local theme = {
 		scheme = scheme or "default",
 		colors = colors.setup(),
