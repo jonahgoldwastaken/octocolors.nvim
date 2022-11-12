@@ -96,6 +96,22 @@ function M.load(theme)
 	vim.g.colors_name = "octocolors"
 
 	M.syntax(theme.highlights)
+
+	M.autocmds()
+end
+
+function M.on_color_scheme()
+	if vim.g.colors_name ~= "octocolors" then
+		vim.cmd([[autocmd! OctoColors]])
+		vim.cmd([[augroup! OctoColors]])
+	end
+end
+
+function M.autocmds()
+	vim.cmd([[augroup OctoColors]])
+	vim.cmd([[  autocmd!]])
+	vim.cmd([[  autocmd ColorScheme * lua require("octocolors.util").on_color_scheme()]])
+	vim.cmd([[augroup end]])
 end
 
 return M
