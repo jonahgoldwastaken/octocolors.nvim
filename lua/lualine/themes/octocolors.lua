@@ -11,15 +11,12 @@ local function create_group(scale)
 	local group = {
 		a = { bg = util.light_dark(scale[6], scale[4]), fg = bg1, gui = "bold" },
 		b = { bg = util.light_dark(scale[7], scale[8]), fg = scale[1] },
-		c = {
-			bg = util.light_dark(scale[2], scale[10]),
-			fg = util.light_dark(scale[10], scale[1]),
-		},
+		c = { bg = colors.canvas.overlay, fg = fg },
 	}
 	return group
 end
 
-local inactive_hi = { bg = bg2, fg = util.alpha(fg, bg1, 0.3) }
+local inactive_hi = { bg = bg2, fg = util.alpha(fg, bg2, 0.3) }
 
 octocolors.normal = create_group(colors.scale.blue)
 octocolors.insert = create_group(colors.scale.green)
