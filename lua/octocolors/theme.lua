@@ -245,6 +245,25 @@ function M.setup(scheme)
 		rainbowcol4 = { fg = light_dark(scale.red[6], scale.red[3]) },
 		rainbowcol5 = { fg = light_dark(scale.pink[6], scale.pink[3]) },
 		rainbowcol6 = { fg = light_dark(scale.purple[6], scale.purple[3]) },
+
+		-- NvimTree
+		NvimTreeNormal = { fg = c.fg.default, bg = c.canvas.inset },
+		NvimTreeEndOfBuffer = { fg = c.canvas.inset },
+		NvimTreeRootFolder = { fg = c.fg.default, bold = true },
+		NvimTreeGitDirty = { fg = c.attention.fg },
+		NvimTreeGitNew = { fg = c.success.fg },
+		NvimTreeGitRenamed = { fg = c.attention.fg },
+		NvimTreeGitDeleted = { fg = c.danger.fg },
+		NvimTreeGitIgnored = { fg = c.fg.default },
+		NvimTreeSpecialFile = { fg = scale.yellow[4], underline = true },
+		NvimTreeIndentMarker = { fg = c.fg.default },
+		NvimTreeImageFile = { fg = scale.yellow[3] },
+		NvimTreeFileIcon = { fg = c.fg.default },
+		NvimTreeFolderIcon = { fg = c.fg.default },
+		NvimTreeSymlink = { fg = scale.purple[4] },
+		NvimTreeFolderName = { fg = c.fg.default },
+		NvimTreeOpenedFolderName = { fg = c.fg.default, bold = true },
+		NvimTreeOpenedFile = { fg = scale.blue[3] },
 	}
 
 	return theme
