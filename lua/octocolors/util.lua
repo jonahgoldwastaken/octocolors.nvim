@@ -3,6 +3,7 @@ local M = {}
 --- @return string "light" or "dark"
 function M.mode() return vim.o.background == "light" and "light" or "dark" end
 
+function M.light_dark(light, dark) return M.mode() == "light" and light or dark end
 --- @param color string Hex color value
 --- @parm bg string Neovim bg
 --- @param alpha number 0-1

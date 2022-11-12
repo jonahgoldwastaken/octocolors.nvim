@@ -23,8 +23,7 @@ function M.setup(scheme)
 	local c = theme.colors
 	local scale = c.scale
 
-	local function light_dark(light, dark) return util.mode() == "light" and light or dark end
-
+	local light_dark = util.light_dark
 	local alpha = util.alpha
 
 	theme.highlights = {
