@@ -1,3 +1,4 @@
+---@type OctoPalette
 local colors = {
 	canvasDefaultTransparent = "rgba(255,255,255,0)",
 	pageHeaderBg = "#f6f8fa",
