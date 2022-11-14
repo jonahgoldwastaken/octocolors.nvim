@@ -25,7 +25,7 @@ function M.setup(scheme)
 	--- @field highlights Highlights
 	local theme = {
 		scheme = scheme,
-		colors = colors.setup(options),
+		colors = colors.setup(),
 		config = options,
 	}
 
