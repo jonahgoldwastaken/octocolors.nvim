@@ -95,6 +95,17 @@ end
 
 function M.syntax(syntax)
 	for group, colors in pairs(syntax) do
+		if colors.style then
+			if type(colors.style) == "table" then
+				colors = vim.tbl_extend("force", colors, colors.style)
+			elseif colors.style:lower() ~= "none" then
+				-- handle old string style definitions
+				for s in string.gmatch(colors.style, "([^,]+)") do
+					colors[s] = true
+				end
+			end
+			colors.style = nil
+		end
 		vim.api.nvim_set_hl(0, group, colors)
 	end
 end
@@ -132,6 +143,7 @@ function M.load_highlights(lang)
 	local c = require("octocolors.colors").setup()
 	if c == nil then return end
 	local highlights = lang.highlights(c, c.scale)
+
 	M.syntax(highlights)
 end
 

@@ -36,7 +36,7 @@ function M.setup(scheme)
 	local alpha = util.alpha
 
 	theme.highlights = {
-		Comment = { fg = light_dark(scale.gray[6], scale.gray[4]) }, -- any comment
+		Comment = { fg = light_dark(scale.gray[6], scale.gray[4]), style = options.styles.comments }, -- any comment
 		ColorColumn = {}, -- used for the columns set with 'colorcolumn'
 		Conceal = {}, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = c.accent.fg }, -- character under the cursor
@@ -129,10 +129,16 @@ function M.setup(scheme)
 		-- Boolean       = { }, --  a boolean constant: TRUE, false
 		-- Float         = { }, --    a floating point constant: 2.3e10
 
-		Identifier = { fg = light_dark(scale.orange[7], scale.orange[3]) }, -- (preferred) any variable name
-		["@variable"] = { fg = c.fg.default },
+		Identifier = {
+			fg = light_dark(scale.orange[7], scale.orange[3]),
+			style = options.styles.variables,
+		}, -- (preferred) any variable name
+		["@variable"] = { fg = c.fg.default, style = options.styles.variables },
 		["@field"] = { fg = c.fg.default },
-		Function = { fg = light_dark(scale.purple[6], scale.purple[3]) }, -- function name (also: methods for classes)
+		Function = {
+			fg = light_dark(scale.purple[6], scale.purple[3]),
+			style = options.styles.functions,
+		}, -- function name (also: methods for classes)
 		["@property"] = { fg = light_dark(scale.blue[9], scale.blue[2]) },
 		["@constructor"] = { fg = light_dark(scale.orange[7], scale.orange[3]) },
 
@@ -141,7 +147,7 @@ function M.setup(scheme)
 		-- Repeat        = { }, --   for, do, while, etc.
 		-- Label         = { }, --    case, default, etc.
 		Operator = { link = "Statement" }, -- "sizeof", "+", "*", etc.
-		Keyword = { link = "Statement" }, --  any other keyword
+		Keyword = { link = "Statement", style = options.styles.keywords }, --  any other keyword
 		-- Exception     = { }, --  try, catch, throw
 
 		PreProc = { fg = light_dark(scale.red[6], scale.red[4]) }, -- (preferred) generic Preprocessor
