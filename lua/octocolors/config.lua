@@ -11,6 +11,7 @@ local defaults = {
 		variables = {},
 	},
 	sidebars = { "qf", "vista_kind", "terminal", "packer", "help" },
+	lazy_load_syntax = true, -- Lazy load custom syntax highlights on FileType event
 }
 
 M.options = {}

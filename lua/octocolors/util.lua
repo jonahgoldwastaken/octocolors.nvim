@@ -107,7 +107,15 @@ function M.load(theme)
 
 	M.syntax(theme.highlights)
 
-	M.autocmds(theme.config)
+	local filetypes = require("octocolors.languages").get_custom_languages()
+
+	if not theme.config.lazy_load_syntax then
+		for _, filetype in ipairs(filetypes) do
+			M.load_highlights(require("octocolors.languages." .. filetype))
+		end
+	end
+
+	M.autocmds(theme.config, filetypes)
 end
 
 function M.on_color_scheme()
@@ -119,11 +127,32 @@ end
 
 function M.on_background_change() M.load(require("octocolors.theme").setup()) end
 
+---@param lang OctoLanguage
+function M.load_highlights(lang)
+	local c = require("octocolors.colors").setup()
+	if c == nil then return end
+	local highlights = lang.highlights(c, c.scale)
+	M.syntax(highlights)
+end
+
+function M.on_file_type()
+	local lang = require("octocolors.languages").load_language(vim.bo.filetype)
+	if lang == nil then return end
+	M.load_highlights(lang)
+end
+
 --- @param config Config
-function M.autocmds(config)
+function M.autocmds(config, filetypes)
 	vim.cmd([[augroup OctoColors]])
 	vim.cmd([[  autocmd!]])
 	vim.cmd([[  autocmd ColorScheme * lua require("octocolors.util").on_color_scheme()]])
+	if config.lazy_load_syntax then
+		vim.cmd(
+			[[  autocmd FileType ]]
+				.. table.concat(filetypes, ",")
+				.. [[ ++once lua require("octocolors.util").on_file_type()]]
+		)
+	end
 	if config.background == "auto" then
 		vim.cmd([[  autocmd OptionSet background lua require 'octocolors.util'.on_background_change()]])
 	end
