@@ -30,6 +30,13 @@ function M.setup(scheme)
 	}
 
 	local c = theme.colors
+	if c == nil then
+		vim.notify(
+			"octocolors: invalid background option: " .. options.background,
+			vim.log.levels.ERROR
+		)
+		return {}
+	end
 	local scale = c.scale
 
 	local light_dark = util.light_dark
@@ -39,82 +46,119 @@ function M.setup(scheme)
 		Comment = { fg = light_dark(scale.gray[6], scale.gray[4]), style = options.styles.comments }, -- any comment
 		ColorColumn = {}, -- used for the columns set with 'colorcolumn'
 		Conceal = {}, -- placeholder characters substituted for concealed text (see 'conceallevel')
-		Cursor = { fg = c.accent.fg }, -- character under the cursor
+		Cursor = { fg = light_dark(scale.blue[6], scale.blue[4]) }, -- character under the cursor
 		lCursor = { link = "Cursor" }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
 		CursorIM = { link = "Cursor" }, -- like Cursor, but used when in IME mode |CursorIM|
 		CursorColumn = { link = "CursorLine" }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
 		CursorLine = { bg = light_dark(scale.blue[2], scale.gray[9]) }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
-		Directory = { fg = c.accent.fg }, -- directory names (and other special names in listings)
+		Directory = { fg = light_dark(scale.blue[6], scale.blue[4]) }, -- directory names (and other special names in listings)
 		DiffAdd = {
 			bg = light_dark(scale.green[2], scale.green[6]),
 		}, -- diff mode: Added line |diff.txt|
 		DiffChange = {
 			bg = light_dark(
-				alpha(scale.yellow[2], c.canvas.default, 0.3),
-				alpha(scale.yellow[6], c.canvas.default, 0.2)
+				alpha(scale.yellow[2], light_dark(scale.white, scale.gray[9]), 0.3),
+				alpha(scale.yellow[6], light_dark(scale.white, scale.gray[9]), 0.2)
 			),
 		}, -- diff mode: Changed line |diff.txt|
 		DiffDelete = {
 			bg = light_dark(
-				alpha(scale.red[2], c.canvas.default, 0.3),
-				alpha(scale.red[6], c.canvas.default, 0.2)
+				alpha(scale.red[2], light_dark(scale.white, scale.gray[9]), 0.3),
+				alpha(scale.red[6], light_dark(scale.white, scale.gray[9]), 0.2)
 			),
 		}, -- diff mode: Deleted line |diff.txt|
 		DiffText = { fg = light_dark(scale.gray[2], scale.gray[6]) }, -- diff mode: Changed text within a changed line |diff.txt|
 		EndOfBuffer = { fg = light_dark(scale.gray[2], scale.gray[6]) }, -- filler lines (~) after the end of the buffer.  By default, this is highlighted like |hl-NonText|.
 		-- TermCursor  = { }, -- cursor in a focused terminal
 		-- TermCursorNC= { }, -- cursor in an unfocused terminal
-		ErrorMsg = { fg = c.danger.fg }, -- error messages on the command line
-		VertSplit = { fg = c.border.default, bg = "NONE" }, -- the column separating vertically split windows
-		WinSeparator = { fg = c.border.default, bg = "NONE" }, -- the column separating vertically split windows
+		ErrorMsg = { fg = light_dark(scale.red[6], scale.red[5]) }, -- error messages on the command line
+		VertSplit = { fg = light_dark(scale.gray[3], scale.gray[7]), bg = "NONE" }, -- the column separating vertically split windows
+		WinSeparator = { fg = light_dark(scale.gray[3], scale.gray[7]), bg = "NONE" }, -- the column separating vertically split windows
 		Folded = {}, -- line used for closed folds
 		FoldColumn = {}, -- 'foldcolumn'
-		SignColumn = { fg = c.canvas.subtle, bg = c.canvas.default }, -- column where |signs| are displayed
-		SignColumnSB = { fg = c.canvas.subtle, bg = c.canvas.overlay }, -- column where |signs| are displayed
-		Substitute = { bg = c.attention.emphasis }, -- |:substitute| replacement text highlighting
+		SignColumn = {
+			fg = light_dark(scale.gray[1], scale.gray[10]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		}, -- column where |signs| are displayed
+		SignColumnSB = {
+			fg = light_dark(scale.gray[1], scale.gray[8]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- column where |signs| are displayed
+		Substitute = { bg = light_dark(scale.yellow[5], scale.yellow[6]) }, -- |:substitute| replacement text highlighting
 		LineNr = { fg = scale.gray[5] }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
-		CursorLineNr = { fg = c.fg.default }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
-		MatchParen = { bg = alpha(scale.green[3], c.canvas.default, 0.25) }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-		ModeMsg = { fg = c.fg.default }, -- 'showmode' message (e.g., "-- INSERT -- ")
-		MsgArea = { fg = c.fg.default }, -- Area for messages and cmdline
+		CursorLineNr = { fg = light_dark(scale.gray[9], scale.gray[2]) }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+		MatchParen = { bg = alpha(scale.green[3], light_dark(scale.white, scale.gray[10]), 0.25) }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+		ModeMsg = { fg = light_dark(scale.gray[9], scale.gray[2]) }, -- 'showmode' message (e.g., "-- INSERT -- ")
+		MsgArea = { fg = light_dark(scale.gray[9], scale.gray[2]) }, -- Area for messages and cmdline
 		-- MsgSeparator= { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-		MoreMsg = { fg = c.accent.fg }, -- |more-prompt|
+		MoreMsg = { fg = light_dark(scale.blue[6], scale.blue[4]) }, -- |more-prompt|
 		NonText = { fg = light_dark(scale.gray[3], scale.gray[5]) }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-		Normal = { fg = c.fg.default, bg = c.canvas.default }, -- normal text
-		NormalNC = { fg = c.fg.default, bg = c.canvas.default }, -- normal text in non-current windows
-		NormalSB = { fg = c.fg.default, bg = c.canvas.default }, -- normal text in sidebar
-		NormalFloat = { fg = c.fg.default, bg = c.canvas.default }, -- Normal text in floating windows.
-		FloatBorder = { fg = c.border.default },
-		Pmenu = { fg = c.fg.default, bg = c.canvas.overlay }, -- Popup menu: normal item.
-		PmenuSel = { fg = c.fg.default, bg = c.neutral.muted }, -- Popup menu: selected item.
-		PmenuSbar = { bg = c.canvas.overlay }, -- Popup menu: scrollbar.
-		PmenuThumb = { bg = alpha(scale.gray[5], c.canvas.default, 0.2) }, -- Popup menu: Thumb of the scrollbar.
-		Question = { fg = c.accent.fg }, -- |hit-enter| prompt and yes/no questions
-		QuickFixLine = { bg = alpha(scale.blue[7], c.canvas.default, 0.4) }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+		Normal = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- normal text
+		NormalNC = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- normal text in non-current windows
+		NormalSB = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- normal text in sidebar
+		NormalFloat = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- Normal text in floating windows.
+		FloatBorder = { fg = light_dark(scale.gray[3], scale.gray[7]) },
+		Pmenu = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		}, -- Popup menu: normal item.
+		PmenuSel = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = alpha(
+				light_dark(scale.gray[4], scale.gray[5]),
+				light_dark(scale.white, scale.gray[10]),
+				0.4
+			),
+		}, -- Popup menu: selected item.
+		PmenuSbar = { bg = light_dark(scale.white, scale.gray[9]) }, -- Popup menu: scrollbar.
+		PmenuThumb = { bg = alpha(scale.gray[5], light_dark(scale.white, scale.gray[9]), 0.2) }, -- Popup menu: Thumb of the scrollbar.
+		Question = { fg = light_dark(scale.blue[6], scale.blue[4]) }, -- |hit-enter| prompt and yes/no questions
+		QuickFixLine = { bg = alpha(scale.blue[7], light_dark(scale.white, scale.gray[9]), 0.4) }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 		Search = {
 			fg = "NONE",
 			bg = light_dark(
-				alpha(scale.yellow[2], c.canvas.default, 0.3),
-				alpha(scale.yellow[6], c.canvas.default, 0.2)
+				alpha(scale.yellow[2], light_dark(scale.white, scale.gray[10]), 0.3),
+				alpha(scale.yellow[6], light_dark(scale.white, scale.gray[10]), 0.2)
 			),
 		}, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
-		IncSearch = { fg = "#000000", bg = c.severe.fg }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
+		IncSearch = { fg = "#000000", bg = light_dark(scale.orange[6], scale.orange[5]) }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		SpecialKey = { fg = light_dark(scale.gray[2], scale.gray[6]) }, -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
-		SpellBad = { sp = c.danger.fg, undercurl = true }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
-		SpellCap = { sp = c.attention.fg, undercurl = true }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
-		SpellLocal = { sp = c.accent.fg, undercurl = true }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
-		SpellRare = { sp = c.fg.muted, undercurl = true }, -- Word that is recognized by the spellchecker as one that is hardly ever used.  |spell| Combined with the highlighting used otherwise.
-		StatusLine = { fg = c.canvas.default, bg = c.accent.fg }, -- status line of current window
-		StatusLineNC = { fg = c.canvas.subtle, bg = c.canvas.default }, -- status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-		TabLine = { fg = c.fg.default, bg = c.canvas.default }, -- tab pages line, not active tab page label
-		TabLineFill = { bg = c.canvas.inset }, -- tab pages line, where there are no labels
+		SpellBad = { sp = light_dark(scale.red[6], scale.red[5]), undercurl = true }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
+		SpellCap = { sp = light_dark(scale.yellow[6], scale.yellow[4]), undercurl = true }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
+		SpellLocal = { sp = light_dark(scale.blue[6], scale.blue[4]), undercurl = true }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
+		SpellRare = { sp = light_dark(scale.gray[7], scale.gray[3]), undercurl = true }, -- Word that is recognized by the spellchecker as one that is hardly ever used.  |spell| Combined with the highlighting used otherwise.
+		StatusLine = {
+			fg = light_dark(scale.white, scale.gray[10]),
+			bg = light_dark(scale.blue[6], scale.blue[4]),
+		}, -- status line of current window
+		StatusLineNC = {
+			fg = light_dark(scale.gray[1], scale.gray[8]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+		TabLine = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[10]),
+		}, -- tab pages line, not active tab page label
+		TabLineFill = { bg = light_dark(scale.gray[1], scale.black) }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true }, -- titles for output from ":set all", ":autocmd" etc.
 		Visual = { bg = light_dark(scale.blue[2], scale.blue[9]) }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
-		WarningMsg = { fg = c.attention.fg }, -- warning messages
+		WarningMsg = { fg = light_dark(scale.yellow[6], scale.yellow[4]) }, -- warning messages
 		Whitespace = { fg = light_dark(scale.gray[8], scale.gray[6]) }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
-		WildMenu = { bg = c.canvas.overlay }, -- current match in 'wildmenu' completion
+		WildMenu = { bg = light_dark(scale.white, scale.gray[9]) }, -- current match in 'wildmenu' completion
 
 		-- These groups are not listed as default vim groups,
 		-- but they are defacto standard group names for syntax highlighting.
@@ -133,8 +177,11 @@ function M.setup(scheme)
 			fg = light_dark(scale.orange[7], scale.orange[3]),
 			style = options.styles.variables,
 		}, -- (preferred) any variable name
-		["@variable"] = { fg = c.fg.default, style = options.styles.variables },
-		["@field"] = { fg = c.fg.default },
+		["@variable"] = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			style = options.styles.variables,
+		},
+		["@field"] = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		Function = {
 			fg = light_dark(scale.purple[6], scale.purple[3]),
 			style = options.styles.functions,
@@ -165,9 +212,9 @@ function M.setup(scheme)
 		-- SpecialChar   = { }, --  special character in a constant
 		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, --    you can use CTRL-] on this
 		["@tag.attribute"] = { fg = light_dark(scale.blue[7], scale.blue[3]) },
-		["@tag.delimiter"] = { fg = c.fg.default },
-		["@tag.punctuation"] = { fg = c.fg.default },
-		["@punctuation.bracket"] = { fg = c.fg.default },
+		["@tag.delimiter"] = { fg = light_dark(scale.gray[9], scale.gray[2]) },
+		["@tag.punctuation"] = { fg = light_dark(scale.gray[9], scale.gray[2]) },
+		["@punctuation.bracket"] = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		-- Delimiter     = { }, --  character that needs attention
 		-- SpecialComment= { }, -- special things inside a comment
 		-- Debug         = { }, --    debugging statements
@@ -180,13 +227,16 @@ function M.setup(scheme)
 		-- ("Ignore", below, may be invisible...)
 		-- Ignore = { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
-		Error = { fg = c.danger.fg }, -- (preferred) any erroneous construct
-		Todo = { fg = c.canvas.default, bg = c.attention.fg }, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		Error = { fg = light_dark(scale.red[6], scale.red[5]) }, -- (preferred) any erroneous construct
+		Todo = {
+			fg = light_dark(scale.white, scale.gray[10]),
+			bg = light_dark(scale.yellow[6], scale.yellow[4]),
+		}, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
 		qfLineNr = { fg = light_dark(scale.red[6], scale.red[4]) },
-		qfFileName = { fg = c.accent.fg },
+		qfFileName = { fg = light_dark(scale.blue[6], scale.blue[4]) },
 
-		mkdCodeDelimiter = { fg = c.fg.default },
+		mkdCodeDelimiter = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		mkdCodeStart = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
 		mkdCodeEnd = { fg = light_dark(scale.orange[7], scale.orange[3]), bold = true },
 
@@ -195,15 +245,15 @@ function M.setup(scheme)
 		markdownH1 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
 		markdownH2 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
 		markdownH3 = { fg = light_dark(scale.blue[7], scale.blue[3]), bold = true },
-		markdownLinkText = { fg = c.fg.default, underline = true },
-		markdownUrl = { fg = c.fg.default, underline = true },
+		markdownLinkText = { fg = light_dark(scale.gray[9], scale.gray[2]), underline = true },
+		markdownUrl = { fg = light_dark(scale.gray[9], scale.gray[2]), underline = true },
 
-		debugPC = { bg = c.canvas.inset }, -- used for highlighting the current line in terminal-debug
+		debugPC = { bg = light_dark(scale.gray[1], scale.black) }, -- used for highlighting the current line in terminal-debug
 		debugBreakpoint = {
-			fg = c.attention.fg,
+			fg = light_dark(scale.yellow[6], scale.yellow[4]),
 			bg = light_dark(
-				alpha(scale.yellow[3], c.canvas.default, 0.3),
-				alpha(scale.yellow[7], c.canvas.default, 0.4)
+				alpha(scale.yellow[3], light_dark(scale.white, scale.gray[10]), 0.3),
+				alpha(scale.yellow[7], light_dark(scale.white, scale.gray[10]), 0.4)
 			),
 		}, -- used for breakpoint colors in terminal-debug
 
@@ -214,20 +264,47 @@ function M.setup(scheme)
 		LspReferenceRead = { link = "LspReferenceText" }, -- used for highlighting "read" references
 		LspReferenceWrite = { link = "LspReferenceText" }, -- used for highlighting "write" references
 
-		DiagnosticError = { fg = c.danger.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticWarn = { fg = c.attention.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticInfo = { fg = c.accent.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticHint = { fg = c.fg.muted }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticError = { fg = light_dark(scale.red[6], scale.red[5]) }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticWarn = { fg = light_dark(scale.yellow[6], scale.yellow[4]) }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticInfo = { fg = light_dark(scale.blue[6], scale.blue[4]) }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticHint = { fg = light_dark(scale.gray[7], scale.gray[3]) }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
 
-		DiagnosticVirtualTextError = { fg = c.danger.fg, bg = c.danger.muted }, -- Used for "Error" diagnostic virtual text
-		DiagnosticVirtualTextWarn = { fg = c.attention.fg, bg = c.attention.muted }, -- Used for "Warning" diagnostic virtual text
-		DiagnosticVirtualTextInfo = { fg = c.accent.fg, bg = c.accent.muted }, -- Used for "Information" diagnostic virtual text
-		DiagnosticVirtualTextHint = { fg = c.fg.muted, bg = c.canvas.subtle }, -- Used for "Hint" diagnostic virtual text
+		DiagnosticVirtualTextError = {
+			fg = light_dark(scale.red[6], scale.red[5]),
+			bg = alpha(
+				light_dark(scale.red[4], scale.red[5]),
+				light_dark(scale.white, scale.gray[10]),
+				0.4
+			),
+		}, -- Used for "Error" diagnostic virtual text
+		DiagnosticVirtualTextWarn = {
+			fg = light_dark(scale.yellow[6], scale.yellow[4]),
+			bg = alpha(
+				light_dark(scale.yellow[4], scale.yellow[5]),
+				light_dark(scale.white, scale.gray[10]),
+				0.4
+			),
+		}, -- Used for "Warning" diagnostic virtual text
+		DiagnosticVirtualTextInfo = {
+			fg = light_dark(scale.blue[6], scale.blue[4]),
+			bg = alpha(
+				light_dark(scale.blue[4], scale.blue[5]),
+				light_dark(scale.white, scale.gray[10]),
+				0.4
+			),
+		}, -- Used for "Information" diagnostic virtual text
+		DiagnosticVirtualTextHint = {
+			fg = light_dark(scale.gray[7], scale.gray[3]),
+			bg = light_dark(scale.gray[1], scale.gray[8]),
+		}, -- Used for "Hint" diagnostic virtual text
 
-		DiagnosticUnderlineError = { undercurl = true, sp = c.danger.fg }, -- Used to underline "Error" diagnostics
-		DiagnosticUnderlineWarn = { undercurl = true, sp = c.attention.fg }, -- Used to underline "Warning" diagnostics
-		DiagnosticUnderlineInfo = { undercurl = true, sp = c.accent.fg }, -- Used to underline "Information" diagnostics
-		DiagnosticUnderlineHint = { undercurl = true, sp = c.fg.muted }, -- Used to underline "Hint" diagnostics
+		DiagnosticUnderlineError = { undercurl = true, sp = light_dark(scale.red[6], scale.red[5]) }, -- Used to underline "Error" diagnostics
+		DiagnosticUnderlineWarn = {
+			undercurl = true,
+			sp = light_dark(scale.yellow[6], scale.yellow[4]),
+		}, -- Used to underline "Warning" diagnostics
+		DiagnosticUnderlineInfo = { undercurl = true, sp = light_dark(scale.blue[6], scale.blue[4]) }, -- Used to underline "Information" diagnostics
+		DiagnosticUnderlineHint = { undercurl = true, sp = light_dark(scale.gray[7], scale.gray[3]) }, -- Used to underline "Hint" diagnostics
 
 		LspCodeLens = { link = "Comment" },
 
@@ -240,46 +317,55 @@ function M.setup(scheme)
 		rainbowcol6 = { fg = light_dark(scale.purple[6], scale.purple[3]) },
 
 		-- NvimTree
-		NvimTreeNormal = { fg = c.fg.default, bg = c.canvas.inset },
-		NvimTreeEndOfBuffer = { fg = c.canvas.inset },
-		NvimTreeRootFolder = { fg = c.fg.default, bold = true },
-		NvimTreeGitDirty = { fg = c.attention.fg },
-		NvimTreeGitNew = { fg = c.success.fg },
-		NvimTreeGitRenamed = { fg = c.attention.fg },
-		NvimTreeGitDeleted = { fg = c.danger.fg },
-		NvimTreeGitIgnored = { fg = c.fg.default },
+		NvimTreeNormal = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.gray[1], scale.black),
+		},
+		NvimTreeEndOfBuffer = { fg = light_dark(scale.gray[1], scale.black) },
+		NvimTreeRootFolder = { fg = light_dark(scale.gray[9], scale.gray[2]), bold = true },
+		NvimTreeGitDirty = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		NvimTreeGitNew = { fg = light_dark(scale.green[6], scale.green[3]) },
+		NvimTreeGitRenamed = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		NvimTreeGitDeleted = { fg = light_dark(scale.red[6], scale.red[5]) },
+		NvimTreeGitIgnored = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NvimTreeSpecialFile = { fg = scale.yellow[4], underline = true },
-		NvimTreeIndentMarker = { fg = c.fg.default },
+		NvimTreeIndentMarker = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NvimTreeImageFile = { fg = scale.yellow[3] },
-		NvimTreeFileIcon = { fg = c.fg.default },
-		NvimTreeFolderIcon = { fg = c.fg.default },
+		NvimTreeFileIcon = { fg = light_dark(scale.gray[9], scale.gray[2]) },
+		NvimTreeFolderIcon = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NvimTreeSymlink = { fg = scale.purple[4] },
-		NvimTreeFolderName = { fg = c.fg.default },
-		NvimTreeOpenedFolderName = { fg = c.fg.default, bold = true },
+		NvimTreeFolderName = { fg = light_dark(scale.gray[9], scale.gray[2]) },
+		NvimTreeOpenedFolderName = { fg = light_dark(scale.gray[9], scale.gray[2]), bold = true },
 		NvimTreeOpenedFile = { fg = scale.blue[3] },
 
 		-- GitGutter
-		GitGutterAdd = { fg = c.success.fg },
-		GitGutterChange = { fg = c.attention.fg },
-		GitGutterDelete = { fg = c.danger.fg },
+		GitGutterAdd = { fg = light_dark(scale.green[6], scale.green[3]) },
+		GitGutterChange = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		GitGutterDelete = { fg = light_dark(scale.red[6], scale.red[5]) },
 
 		-- GitSigns
-		GitSignsAdd = { fg = c.success.fg },
-		GitSignsChange = { fg = c.attention.fg },
-		GitSignsDelete = { fg = c.danger.fg },
+		GitSignsAdd = { fg = light_dark(scale.green[6], scale.green[3]) },
+		GitSignsChange = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		GitSignsDelete = { fg = light_dark(scale.red[6], scale.red[5]) },
 
 		-- Telescope
-		TelescopeBorder = { fg = c.fg.muted, bg = c.canvas.overlay },
-		TelescopeNormal = { fg = c.fg.default, bg = c.canvas.overlay },
-		TelescopeTitle = { fg = c.fg.default },
-		TelescopePromptPrefix = { fg = c.fg.default },
+		TelescopeBorder = {
+			fg = light_dark(scale.gray[7], scale.gray[3]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		TelescopeNormal = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		TelescopeTitle = { fg = light_dark(scale.gray[9], scale.gray[2]) },
+		TelescopePromptPrefix = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 
 		-- Cmp
 		CmpDocumentation = { link = "NormalFloat" },
 		CmpDocumentationBorder = { link = "FloatBorder" },
 		CmpItemAbbrDeprecated = { fg = light_dark(scale.gray[6], scale.gray[4]), strikethrough = true },
-		CmpItemAbbrMatch = { fg = c.accent.fg },
-		CmpItemAbbr = { fg = c.fg.default },
+		CmpItemAbbrMatch = { fg = light_dark(scale.blue[6], scale.blue[4]) },
+		CmpItemAbbr = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		CmpItemAbbrMatchFuzzy = { link = "CmpItemAbbrMatch" },
 		CmpItemMenu = { link = "CmpItemAbbrDefault" },
 		CmpItemKindColor = { fg = light_dark(scale.blue[9], scale.blue[3]) },
@@ -309,9 +395,15 @@ function M.setup(scheme)
 		CmpItemKindStruct = { fg = light_dark(scale.orange[7], scale.orange[4]) },
 
 		-- Noice
-		NoiceCmdlinePopupBorder = { fg = c.fg.muted, bg = c.canvas.overlay },
-		NoiceCmdlinePopup = { fg = c.fg.default, bg = c.canvas.overlay },
-		NoiceCmdlineIcon = { fg = c.fg.default },
+		NoiceCmdlinePopupBorder = {
+			fg = light_dark(scale.gray[7], scale.gray[3]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NoiceCmdlinePopup = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NoiceCmdlineIcon = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NoiceCompletionItemKindEnum = { fg = light_dark(scale.orange[7], scale.orange[4]) },
 		NoiceCompletionItemKindFile = { fg = light_dark(scale.yellow[7], scale.yellow[4]) },
 		NoiceCompletionItemKindText = { fg = light_dark(scale.blue[9], scale.blue[3]) },
@@ -339,29 +431,56 @@ function M.setup(scheme)
 		NoiceCompletionItemKindTypeParameter = { fg = light_dark(scale.blue[8], scale.blue[2]) },
 
 		-- Notify
-		NotifyERRORBorder = { fg = c.danger.fg, bg = c.canvas.overlay },
-		NotifyWARNBorder = { fg = c.attention.fg, bg = c.canvas.overlay },
-		NotifyINFOBorder = { fg = c.accent.fg, bg = c.canvas.overlay },
-		NotifyDEBUGBorder = { fg = c.fg.default, bg = c.canvas.overlay },
-		NotifyTRACEBorder = { fg = scale.purple[9], bg = c.canvas.overlay },
+		NotifyERRORBorder = {
+			fg = light_dark(scale.red[6], scale.red[5]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyWARNBorder = {
+			fg = light_dark(scale.yellow[6], scale.yellow[4]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyINFOBorder = {
+			fg = light_dark(scale.blue[6], scale.blue[4]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyDEBUGBorder = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyTRACEBorder = { fg = scale.purple[9], bg = light_dark(scale.white, scale.gray[9]) },
 
-		NotifyERRORIcon = { fg = c.danger.fg },
-		NotifyWARNIcon = { fg = c.attention.fg },
-		NotifyINFOIcon = { fg = c.accent.fg },
-		NotifyDEBUGIcon = { fg = c.fg.default },
+		NotifyERRORIcon = { fg = light_dark(scale.red[6], scale.red[5]) },
+		NotifyWARNIcon = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		NotifyINFOIcon = { fg = light_dark(scale.blue[6], scale.blue[4]) },
+		NotifyDEBUGIcon = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NotifyTRACEIcon = { fg = scale.purple[9] },
 
-		NotifyERRORTitle = { fg = c.danger.fg },
-		NotifyWARNTitle = { fg = c.attention.fg },
-		NotifyINFOTitle = { fg = c.accent.fg },
-		NotifyDEBUGTitle = { fg = c.fg.default },
+		NotifyERRORTitle = { fg = light_dark(scale.red[6], scale.red[5]) },
+		NotifyWARNTitle = { fg = light_dark(scale.yellow[6], scale.yellow[4]) },
+		NotifyINFOTitle = { fg = light_dark(scale.blue[6], scale.blue[4]) },
+		NotifyDEBUGTitle = { fg = light_dark(scale.gray[9], scale.gray[2]) },
 		NotifyTRACETitle = { fg = scale.purple[9] },
 
-		NotifyERRORBody = { fg = c.fg.default, bg = c.canvas.overlay },
-		NotifyWARNBody = { fg = c.fg.default, bg = c.canvas.overlay },
-		NotifyINFOBody = { fg = c.fg.default, bg = c.canvas.overlay },
-		NotifyDEBUGBody = { fg = c.fg.default, bg = c.canvas.overlay },
-		NotifyTRACEBody = { fg = c.fg.default, bg = c.canvas.overlay },
+		NotifyERRORBody = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyWARNBody = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyINFOBody = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyDEBUGBody = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
+		NotifyTRACEBody = {
+			fg = light_dark(scale.gray[9], scale.gray[2]),
+			bg = light_dark(scale.white, scale.gray[9]),
+		},
 	}
 
 	return theme

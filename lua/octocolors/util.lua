@@ -13,7 +13,7 @@ end
 function M.light_dark(light, dark) return M.mode() == "light" and light or dark end
 
 --- @param color string Hex color value
---- @parm bg string Neovim bg
+--- @param bg string Neovim bg
 --- @param alpha number 0-1
 function M.alpha(color, bg, alpha)
 	local c = M.hex_to_rgb(color)
@@ -62,35 +62,6 @@ function M.rgba_to_hex(color, bg)
 	local r, g, b, a = string.match(color, pat)
 
 	return M.alpha(string.format("#%02x%02x%02x", r, g, b), bg, a)
-end
-
---- @param table table
-function M.color_to_hex(table, bg)
-	bg = bg or ""
-	if bg == "" then
-		for k, _ in pairs(table) do
-			if k == "canvas" then
-				for k2, v in pairs(table[k]) do
-					if k2 == "default" then bg = v end
-				end
-			end
-		end
-	end
-
-	if type(table) == "table" then
-		for key, value in pairs(table) do
-			if type(value) == "table" then
-				table[key] = M.color_to_hex(table[key], bg)
-			else
-				if string.find(value, "^rgba") then
-					table[key] = M.rgba_to_hex(table[key], bg)
-				elseif string.find(value, "^rgb") then
-					table[key] = M.rgb_to_hex(table[key])
-				end
-			end
-		end
-	end
-	return table
 end
 
 function M.syntax(syntax)
@@ -142,7 +113,7 @@ function M.on_background_change() M.load(require("octocolors.theme").setup()) en
 function M.load_highlights(lang)
 	local c = require("octocolors.colors").setup()
 	if c == nil then return end
-	local highlights = lang.highlights(c, c.scale)
+	local highlights = lang.highlights(c.scale)
 
 	M.syntax(highlights)
 end

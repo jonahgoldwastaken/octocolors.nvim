@@ -1,9 +1,9 @@
-local util = require("octocolors.util")
 local M = {}
 
 local _loaded_style = ""
 local _colors = {}
 
+---@return OctoPalette|nil
 function M.setup()
 	local opts = require("octocolors.config").options
 
@@ -16,7 +16,7 @@ function M.setup()
 		vim.notify("octocolors: invalid background option: " .. style, vim.log.levels.ERROR)
 		return
 	end
-	_colors = util.color_to_hex(palette)
+	_colors = palette
 	return _colors
 end
 

@@ -3,10 +3,10 @@ local util = require("octocolors.util")
 ---@type OctoLanguage
 local M = {}
 
-function M.highlights(c, scale)
+function M.highlights(scale)
 	return {
-		["@property.toml"] = { fg = c.fg.default },
-		["@operator.toml"] = { fg = c.fg.default },
+		["@property.toml"] = { fg = util.light_dark(scale.gray[9], scale.gray[2]) },
+		["@operator.toml"] = { fg = util.light_dark(scale.gray[9], scale.gray[2]) },
 		["@type.toml"] = { fg = util.light_dark(scale.purple[6], scale.purple[3]) },
 	}
 end
