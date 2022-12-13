@@ -1,14 +1,12 @@
-local util = require("octocolors.util")
-
 ---@type OctoLanguage
 local M = {}
 
-function M.highlights(scale)
+function M.highlights(c)
 	return {
-		["@punctuation.delimiter.tsx"] = { fg = util.light_dark(scale.red[6], scale.red[4]) },
-		["@type.tsx"] = { fg = util.light_dark(scale.orange[7], scale.orange[3]) },
-		["@variable.tsx"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@property.tsx"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
+		["@punctuation.delimiter.tsx"] = { fg = c.red },
+		["@type.tsx"] = { fg = c.orange },
+		["@variable.tsx"] = { fg = c.blue2 },
+		["@property.tsx"] = { fg = c.blue2 },
 	}
 end
 

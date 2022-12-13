@@ -1,4 +1,4 @@
----@class OctoPalette
+---@type OctoPalette
 local colors = {
 	ansi = {
 		black = "#484f58",

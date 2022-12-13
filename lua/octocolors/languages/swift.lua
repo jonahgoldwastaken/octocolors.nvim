@@ -1,14 +1,12 @@
-local util = require("octocolors.util")
-
 ---@type OctoLanguage
 local M = {}
 
-function M.highlights(scale)
+function M.highlights(c)
 	return {
-		["@parameter.swift"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@type.swift"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@function.call.swift"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@namespace.swift"] = { fg = util.light_dark(scale.purple[6], scale.purple[3]) },
+		["@parameter.swift"] = { fg = c.blue2 },
+		["@type.swift"] = { fg = c.blue2 },
+		["@function.call.swift"] = { fg = c.blue2 },
+		["@namespace.swift"] = { fg = c.purple },
 	}
 end
 

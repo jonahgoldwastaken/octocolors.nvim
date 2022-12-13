@@ -6,7 +6,8 @@ local M = {}
 
 --- @param opts Config|nil
 function M.load(opts)
-	if opts then config.extend(opts) end
+	opts = opts or {}
+	config.extend(opts)
 	util.load(theme.setup())
 end
 

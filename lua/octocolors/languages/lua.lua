@@ -1,14 +1,12 @@
-local util = require("octocolors.util")
-
 ---@type OctoLanguage
 local M = {}
 
-function M.highlights(scale)
+function M.highlights(c)
 	return {
-		["@function.lua"] = { fg = util.light_dark(scale.red[6], scale.red[4]) },
-		["@function.call.lua"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@function.builtin.lua"] = { fg = util.light_dark(scale.blue[7], scale.blue[3]) },
-		["@definition.function.lua"] = { fg = util.light_dark(scale.purple[6], scale.purple[3]) },
+		["@function.lua"] = { fg = c.red },
+		["@function.call.lua"] = { fg = c.blue2 },
+		["@function.builtin.lua"] = { fg = c.blue2 },
+		["@definition.function.lua"] = { fg = c.purple },
 	}
 end
 

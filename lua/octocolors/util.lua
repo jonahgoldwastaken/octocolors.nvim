@@ -41,39 +41,11 @@ function M.hex_to_rgb(color)
 	return { tonumber(r, 16), tonumber(g, 16), tonumber(b, 16) }
 end
 
---- @param color string RGB color value
-function M.rgb_to_hex(color)
-	local rgb = "[0-9][0-9]?[0-9]?"
-	local pat = string.format("^rgb%%((%s),(%s),(%s)%%)$", rgb, rgb, rgb)
-	assert(string.find(color, pat) ~= nil, "Invalid rgb color: " .. tostring(color))
-
-	local r, g, b = string.match(color, pat)
-
-	return string.format("#%02x%02x%02x", r, g, b)
-end
-
---- @param color string RGB color value
-function M.rgba_to_hex(color, bg)
-	local rgb = "[0-9][0-9]?[0-9]?"
-	local alpha = "[0-1]%.?[0-9]*"
-	local pat = string.format("^rgba%%((%s),(%s),(%s),(%s)%%)$", rgb, rgb, rgb, alpha)
-	assert(string.find(color, pat) ~= nil, "Invalid rgba color: " .. tostring(color))
-
-	local r, g, b, a = string.match(color, pat)
-
-	return M.alpha(string.format("#%02x%02x%02x", r, g, b), bg, a)
-end
-
 function M.syntax(syntax)
 	for group, colors in pairs(syntax) do
 		if colors.style then
 			if type(colors.style) == "table" then
 				colors = vim.tbl_extend("force", colors, colors.style)
-			elseif colors.style:lower() ~= "none" then
-				-- handle old string style definitions
-				for s in string.gmatch(colors.style, "([^,]+)") do
-					colors[s] = true
-				end
 			end
 			colors.style = nil
 		end
@@ -111,9 +83,9 @@ function M.on_background_change() M.load(require("octocolors.theme").setup()) en
 
 ---@param lang OctoLanguage
 function M.load_highlights(lang)
-	local c = require("octocolors.colors").setup()
+	local c = require("octocolors.colors").get_colors()
 	if c == nil then return end
-	local highlights = lang.highlights(c.scale)
+	local highlights = lang.highlights(c.colors)
 
 	M.syntax(highlights)
 end
