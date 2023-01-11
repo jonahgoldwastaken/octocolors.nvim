@@ -11,6 +11,16 @@ A proper implementation of GitHub's color scheme for Neovim, written in Lua and 
 
 Install with your favourite package manager:
 
+### [lazy](https://github.com/folke/lazy.nvim)
+
+```lua
+{
+	"jonahgoldwastaken/octocolors.nvim",
+	lazy = false,
+	priority = 1000,
+}
+```
+
 ### [packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
