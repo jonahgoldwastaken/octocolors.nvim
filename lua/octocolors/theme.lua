@@ -51,8 +51,8 @@ function M.setup(scheme)
 		lCursor = { link = "Cursor" }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
 		CursorIM = { link = "Cursor" }, -- like Cursor, but used when in IME mode |CursorIM|
 		CursorColumn = { link = "CursorLine" }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
-		CursorLine = { bg = light_dark(scale.blue[2], scale.gray[9]) }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
-		Directory = { fg = co.blue }, -- directory names (and other special names in listings)
+		CursorLine = { bg = co.active_line }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
+		Directory = { fg = co.fg }, -- directory names (and other special names in listings)
 		DiffAdd = {
 			bg = co.git.add.bg,
 		}, -- diff mode: Added line |diff.txt|
@@ -94,17 +94,17 @@ function M.setup(scheme)
 		}, -- normal text
 		NormalNC = {
 			fg = co.fg,
-			bg = co.bg,
+			bg = co.sidebar,
 		}, -- normal text in non-current windows
 		NormalSB = {
 			fg = co.fg,
-			bg = co.bg,
+			bg = co.sidebar,
 		}, -- normal text in sidebar
 		NormalFloat = {
 			fg = co.fg,
-			bg = co.bg,
+			bg = co.overlay,
 		}, -- Normal text in floating windows.
-		FloatBorder = { fg = co.border },
+		FloatBorder = { fg = co.border, bg = co.overlay },
 		Pmenu = {
 			fg = co.fg,
 			bg = co.overlay,
@@ -119,9 +119,10 @@ function M.setup(scheme)
 		QuickFixLine = { bg = alpha(scale.blue[7], co.overlay, 0.4) }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 		Search = {
 			fg = "NONE",
-			bg = light_dark(alpha(scale.yellow[2], co.bg, 0.3), alpha(scale.yellow[6], co.bg, 0.2)),
+			bg = co.match_highlight,
 		}, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
-		IncSearch = { fg = "#000000", bg = light_dark(scale.orange[6], scale.orange[5]) }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
+		IncSearch = { bg = co.match }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
+		CurSearch = { link = "IncSearch" },
 		SpecialKey = { fg = co.whitespace }, -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
 		SpellBad = { sp = co.diagnostic.error.fg, undercurl = true }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		SpellCap = { sp = co.yellow, undercurl = true }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
@@ -141,11 +142,11 @@ function M.setup(scheme)
 		}, -- tab pages line, not active tab page label
 		TabLineFill = { bg = co.sidebar }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
-		Title = { fg = co.orange, bold = true }, -- titles for output from ":set all", ":autocmd" etc.
-		Visual = { bg = light_dark(scale.blue[2], scale.blue[9]) }, -- Visual mode selection
+		Title = { fg = co.blue2, bold = true }, -- titles for output from ":set all", ":autocmd" etc.
+		Visual = { fg = co.bg, bg = co.selection }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = co.yellow }, -- warning messages
-		Whitespace = { fg = light_dark(scale.gray[8], scale.gray[6]) }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
+		Whitespace = { fg = co.whitespace }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
 		WildMenu = { bg = co.overlay }, -- current match in 'wildmenu' completion
 
 		-- These groups are not listed as default vim groups,
@@ -174,7 +175,7 @@ function M.setup(scheme)
 			fg = co.purple,
 			style = options.styles.functions,
 		}, -- function name (also: methods for classes)
-		["@property"] = { fg = co.blue3 },
+		["@property"] = { fg = co.fg },
 		["@constructor"] = { fg = co.orange },
 
 		Statement = { fg = co.red }, -- (preferred) any statement
@@ -196,6 +197,17 @@ function M.setup(scheme)
 		-- Structure     = { }, --  struct, union, enum, etc.
 		-- Typedef       = { }, --  A typedef
 
+		["@class"] = { fg = co.red },
+		["@struct"] = { fg = co.orange },
+		["@enum"] = { fg = co.orange },
+		["@enumMember"] = { fg = co.blue2 },
+		-- ["@event"] = { },
+		["@interface"] = { fg = co.blue2 },
+		["@modifier"] = { fg = co.fg },
+		["@regexp"] = { fg = co.green },
+		--[[ ["@typeParameter"] = { fg = co.blue }, ]]
+		--[[ ["@decorator"] = { fg = co.blue }, ]]
+
 		Special = { fg = co.blue3 }, -- (preferred) any special symbol
 		-- SpecialChar   = { }, --  special character in a constant
 		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, --    you can use CTRL-] on this
@@ -211,6 +223,7 @@ function M.setup(scheme)
 		Bold = { bold = true },
 		Italic = { italic = true },
 		["@text.emphasis"] = { italic = true },
+		["@text.reference"] = { fg = co.link, underline = true, bold = true },
 
 		-- ("Ignore", below, may be invisible...)
 		-- Ignore = { }, -- (preferred) left blank, hidden  |hl-Ignore|
@@ -233,8 +246,8 @@ function M.setup(scheme)
 		markdownH1 = { fg = co.blue2, bold = true },
 		markdownH2 = { fg = co.blue2, bold = true },
 		markdownH3 = { fg = co.blue2, bold = true },
-		markdownLinkText = { fg = co.fg, underline = true },
-		markdownUrl = { fg = co.fg, underline = true },
+		markdownLinkText = { fg = co.link, underline = true },
+		markdownUrl = { fg = co.link, underline = true },
 
 		debugPC = { bg = co.sidebar }, -- used for highlighting the current line in terminal-debug
 		debugBreakpoint = {
@@ -311,6 +324,32 @@ function M.setup(scheme)
 		NvimTreeOpenedFolderName = { fg = co.fg, bold = true },
 		NvimTreeOpenedFile = { fg = scale.blue[3] },
 
+		-- Neotree
+		NeoTreeNormal = {
+			fg = co.fg,
+			bg = co.sidebar,
+		},
+		NeoTreeNormalNC = {
+			fg = co.fg,
+			bg = co.sidebar,
+		},
+		NeoTreeEndOfBuffer = { fg = co.sidebar },
+		NeoTreeRootName = { fg = co.fg, bold = true },
+		NeoTreeGitModified = { fg = co.yellow },
+		NeoTreeGitAdded = { fg = co.git.add.fg },
+		NeoTreeGitRenamed = { fg = co.yellow },
+		NeoTreeGitDeleted = { fg = co.git.delete.fg },
+		NeoTreeGitIgnored = { fg = co.comment },
+		NeoTreeDimText = { fg = co.comment },
+		NeoTreeMessage = { link = "NeoTreeDimText", italic = true },
+		NeoTreeIndentMarker = { fg = co.fg },
+		NeoTreeFileIcon = { fg = co.fg },
+		NeoTreeDirectoryIcon = { fg = co.fg },
+		NeoTreeSymbolicLinkTarget = { fg = scale.purple[4] },
+		NeoTreeDirectoryName = { fg = co.fg },
+		NeoTreeFileNameOpened = { fg = co.fg, bold = true },
+		NeoTreeExpander = { fg = co.fg },
+
 		-- GitGutter
 		GitGutterAdd = { fg = co.git.add.fg },
 		GitGutterChange = { fg = co.yellow },
@@ -323,7 +362,7 @@ function M.setup(scheme)
 
 		-- Telescope
 		TelescopeBorder = {
-			fg = light_dark(scale.gray[7], scale.gray[3]),
+			fg = co.border,
 			bg = co.overlay,
 		},
 		TelescopeNormal = {
@@ -369,7 +408,7 @@ function M.setup(scheme)
 
 		-- Noice
 		NoiceCmdlinePopupBorder = {
-			fg = light_dark(scale.gray[7], scale.gray[3]),
+			fg = co.border,
 			bg = co.overlay,
 		},
 		NoiceCmdlinePopup = {
@@ -377,6 +416,8 @@ function M.setup(scheme)
 			bg = co.overlay,
 		},
 		NoiceCmdlineIcon = { fg = co.fg },
+		NoiceCmdlinePrompt = { fg = co.fg },
+		NoiceCmdlinePopupBorderInput = { fg = co.border },
 		NoiceCompletionItemKindEnum = { fg = co.cmp.orange },
 		NoiceCompletionItemKindFile = { fg = co.cmp.yellow },
 		NoiceCompletionItemKindText = { fg = co.cmp.blue },
@@ -402,6 +443,9 @@ function M.setup(scheme)
 		NoiceCompletionItemKindEnumMember = { fg = co.cmp.blue2 },
 		NoiceCompletionItemKindConstructor = { fg = light_dark(scale.purple[9], scale.purple[3]) },
 		NoiceCompletionItemKindTypeParameter = { fg = light_dark(scale.blue[8], scale.blue[2]) },
+		NoiceFormatProgressDone = { bg = co.green },
+		NoiceLspProgressSpinner = { fg = co.fg },
+		NoiceLspProgressClient = { fg = co.fg, bold = true },
 
 		-- Notify
 		NotifyERRORBorder = {
@@ -413,7 +457,7 @@ function M.setup(scheme)
 			bg = co.overlay,
 		},
 		NotifyINFOBorder = {
-			fg = co.blue,
+			fg = co.border,
 			bg = co.overlay,
 		},
 		NotifyDEBUGBorder = {
@@ -454,6 +498,26 @@ function M.setup(scheme)
 			fg = co.fg,
 			bg = co.overlay,
 		},
+
+		MiniIdentscopeSymbol = { fg = co.fg },
+
+		DevIconDefault = { fg = co.fg },
+
+		MasonHighlight = { fg = co.blue },
+		MasonHighlightBlock = { fg = co.bg, bg = co.blue },
+		MasonHighlightBlockBold = { fg = co.bg, bg = co.blue, bold = true },
+		MasonHighlightSecondary = { fg = co.orange },
+		MasonMuted = { fg = co.comment },
+		MasonMutedBlock = { fg = co.bg, bg = co.comment },
+		MasonMutedBlockBold = { fg = co.bg, bg = co.comment, bold = true },
+		MasonError = { fg = co.red },
+		MasonHeader = { fg = co.bg, bg = co.orange },
+		MasonHeaderSecondary = { fg = co.bg, bg = co.blue },
+		MasonHeaderSecondaryBold = { fg = co.bg, bg = co.blue, bold = true },
+
+		HopNextKey = { fg = co.green2 },
+		HopNextKey1 = { fg = co.yellow },
+		HopNextKey2 = { fg = co.match },
 	}
 
 	return theme
