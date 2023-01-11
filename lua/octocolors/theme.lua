@@ -153,7 +153,7 @@ function M.setup(scheme)
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
 		Constant = { fg = co.blue2 }, -- (preferred) any constant
-		String = { fg = light_dark(scale.blue[8], scale.blue[2]) }, --   a string constant: "this is a string"
+		String = { fg = co.blue3 }, --   a string constant: "this is a string"
 		Character = { link = "String" }, --  a character constant: 'c', '\n'
 		-- Number        = { }, --   a number constant: 234, 0xff
 		-- Boolean       = { }, --  a boolean constant: TRUE, false
