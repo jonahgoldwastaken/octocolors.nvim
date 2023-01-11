@@ -47,7 +47,7 @@ local _colors = {}
 function M.setup()
 	local opts = require("octocolors.config").options
 
-	local style = opts.background == "auto" and vim.o.background or opts.background
+	local style = opts.theme == "auto" and vim.o.background or opts.theme
 	if style == _loaded_style then return _colors end
 
 	---@type boolean, OctoPalette

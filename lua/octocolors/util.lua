@@ -2,11 +2,11 @@ local M = {}
 
 --- @return string "light" or "dark"
 function M.mode()
-	local bg = require("octocolors.config").options.background
-	if bg == "auto" then
+	local theme = require("octocolors.config").options.theme
+	if theme == "auto" then
 		return vim.o.background
 	else
-		return bg
+		return theme
 	end
 end
 
@@ -108,7 +108,7 @@ function M.autocmds(config, filetypes)
 				.. [[ ++once lua require 'octocolors.util'.on_file_type()]]
 		)
 	end
-	if config.background == "auto" then
+	if config.theme == "auto" then
 		vim.cmd([[  autocmd OptionSet background lua require 'octocolors.util'.on_background_change()]])
 	end
 

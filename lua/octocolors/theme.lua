@@ -31,10 +31,7 @@ function M.setup(scheme)
 
 	local c = theme.colors
 	if c == nil then
-		vim.notify(
-			"octocolors: invalid background option: " .. options.background,
-			vim.log.levels.ERROR
-		)
+		vim.notify("octocolors: invalid background option: " .. options.theme, vim.log.levels.ERROR)
 		return {}
 	end
 	local co = c.colors
@@ -94,7 +91,7 @@ function M.setup(scheme)
 		}, -- normal text
 		NormalNC = {
 			fg = co.fg,
-			bg = co.sidebar,
+			bg = co.bg,
 		}, -- normal text in non-current windows
 		NormalSB = {
 			fg = co.fg,

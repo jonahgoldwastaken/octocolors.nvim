@@ -2,7 +2,7 @@ local M = {}
 
 --- @class Config
 local defaults = {
-	background = "auto", -- May be "light", "dark" or "auto"
+	theme = "auto", -- May be "light", "dark" or "auto"
 	terminal_colors = false, -- Highlight colors when using `:terminal`
 	styles = {
 		comments = { italic = true },
