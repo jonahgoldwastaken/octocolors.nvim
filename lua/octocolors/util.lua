@@ -100,22 +100,24 @@ end
 function M.autocmds(config, filetypes)
 	vim.cmd([[augroup OctoColors]])
 	vim.cmd([[  autocmd!]])
-	vim.cmd([[  autocmd ColorScheme * lua require("octocolors.util").on_color_scheme()]])
+	vim.cmd([[  autocmd ColorScheme * lua require 'octocolors.util'.on_color_scheme()]])
 	if config.lazy_load_syntax then
 		vim.cmd(
 			[[  autocmd FileType ]]
 				.. table.concat(filetypes, ",")
-				.. [[ ++once lua require("octocolors.util").on_file_type()]]
+				.. [[ ++once lua require 'octocolors.util'.on_file_type()]]
 		)
 	end
 	if config.background == "auto" then
 		vim.cmd([[  autocmd OptionSet background lua require 'octocolors.util'.on_background_change()]])
 	end
+
 	vim.cmd(
 		[[  autocmd FileType ]]
 			.. table.concat(config.sidebars, ",")
 			.. [[ setlocal winhighlight=Normal:NormalSB,SignColumn:SignColumnSB]]
 	)
+
 	if vim.tbl_contains(config.sidebars, "terminal") then
 		vim.cmd([[  autocmd TermOpen * setlocal winhighlight=Normal:NormalSB,SignColumn:SignColumnSB]])
 	end
