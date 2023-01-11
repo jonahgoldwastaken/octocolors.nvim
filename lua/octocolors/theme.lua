@@ -155,9 +155,9 @@ function M.setup(scheme)
 		Constant = { fg = co.blue2 }, -- (preferred) any constant
 		String = { fg = co.blue3 }, --   a string constant: "this is a string"
 		Character = { link = "String" }, --  a character constant: 'c', '\n'
-		-- Number        = { }, --   a number constant: 234, 0xff
-		-- Boolean       = { }, --  a boolean constant: TRUE, false
-		-- Float         = { }, --    a floating point constant: 2.3e10
+		Number = { fg = co.blue2 }, --   a number constant: 234, 0xff
+		Boolean = { link = "Number" }, --  a boolean constant: TRUE, false
+		Float = { link = "Number" }, --    a floating point constant: 2.3e10
 
 		Identifier = {
 			fg = co.orange,
@@ -186,7 +186,7 @@ function M.setup(scheme)
 		PreProc = { fg = co.red }, -- (preferred) generic Preprocessor
 		-- Include       = { }, --  preprocessor #include
 		-- Define        = { }, --   preprocessor #define
-		-- Macro         = { }, --    same as Define
+		Macro = { fg = co.fg }, --    same as Define
 		-- PreCondit     = { }, --  preprocessor #if, #else, #endif, etc.
 
 		Type = { fg = co.red }, -- (preferred) int, long, char, etc.
