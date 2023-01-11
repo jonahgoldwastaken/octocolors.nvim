@@ -14,18 +14,18 @@ end
 
 local function create_group(scale)
 	local group = {
-		a = { bg = util.light_dark(scale[6], scale[4]), fg = colors.colors.statusline.bg, gui = "bold" },
+		a = { bg = util.light_dark(scale[6], scale[4]), fg = colors.colors.bg.overlay, gui = "bold" },
 		b = {
 			bg = util.light_dark(scale[7], scale[8]),
 			fg = scale[1],
 		},
-		c = { bg = colors.colors.statusline.bg, fg = util.light_dark(scale[8], scale[1]) },
+		c = { bg = colors.colors.bg.overlay, fg = util.light_dark(scale[8], scale[1]) },
 	}
 	return group
 end
 
 local inactive_hi = {
-	bg = colors.colors.bg,
+	bg = colors.colors.bg.default,
 	fg = colors.colors.comment,
 }
 

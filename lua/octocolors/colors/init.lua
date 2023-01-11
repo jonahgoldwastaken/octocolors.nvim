@@ -65,7 +65,11 @@ function M.setup()
 	---@class OctoColors
 	palette.colors = {
 		fg = util.light_dark(scale.gray[9], scale.gray[2]),
-		bg = bg,
+		bg = {
+			default = bg,
+			overlay = overlay,
+			sidebar = util.light_dark(scale.gray[1], scale.black),
+		},
 		blue = util.light_dark(scale.blue[6], scale.blue[4]),
 		blue2 = util.light_dark(scale.blue[7], scale.blue[3]),
 		blue3 = util.light_dark(scale.blue[9], scale.blue[2]),
@@ -77,15 +81,10 @@ function M.setup()
 		red = util.light_dark(scale.red[6], scale.red[4]),
 		comment = util.light_dark(scale.gray[6], scale.gray[4]),
 		whitespace = util.light_dark(scale.gray[2], scale.gray[6]),
-		active_line = util.light_dark(
-			util.alpha(scale.gray[2], bg, 0.5),
-			util.alpha(scale.gray[5], bg, 0.1)
-		),
 		selection = util.light_dark(scale.blue[5], scale.blue[6]),
 		match = util.light_dark(scale.yellow[5], scale.yellow[6]),
 		match_highlight = util.alpha(scale.yellow[2], bg, 0.5),
 		link = util.light_dark(scale.blue[9], scale.blue[2]),
-		overlay = overlay,
 		diagnostic = {
 			error = {
 				fg = util.light_dark(scale.red[6], scale.red[5]),
@@ -124,7 +123,6 @@ function M.setup()
 				),
 			},
 		},
-		sidebar = util.light_dark(scale.gray[1], scale.black),
 		statusline = {
 			bg = util.light_dark(scale.white, scale.gray[9]),
 			fg = util.light_dark(scale.gray[9], scale.gray[2]),
