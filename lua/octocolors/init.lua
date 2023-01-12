@@ -4,7 +4,7 @@ local theme = require("octocolors.theme")
 
 local M = {}
 
---- @param opts Config|nil
+--- @param opts octocolors.config|nil
 function M.load(opts)
 	opts = opts or {}
 	config.extend(opts)

@@ -1,4 +1,4 @@
----@type OctoScale
+---@type octocolors.scale
 local colors = {
 	black = "#1b1f24",
 	white = "#ffffff",

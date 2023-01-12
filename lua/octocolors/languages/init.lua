@@ -4,7 +4,7 @@ local M = {}
 local _loaded_languages = {}
 
 ---@param lang string
----@return OctoLanguage|nil
+---@return octocolors.language|nil
 function M.load_language(lang)
 	if lang == "" then return end
 	if _loaded_languages[lang] then return end
@@ -23,7 +23,9 @@ function M.get_custom_languages()
 	local files = vim.fn.glob(dir .. "/*.lua", false, true)
 	local langs = {}
 	for _, file in ipairs(files) do
-		if not file:match("init.lua") then table.insert(langs, vim.fs.basename(file:gsub(".lua$", ""))) end
+		if not file:match("init.lua") then
+			table.insert(langs, vim.fs.basename(file:gsub(".lua$", "")))
+		end
 	end
 	return langs
 end

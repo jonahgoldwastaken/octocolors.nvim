@@ -1,4 +1,4 @@
----@type OctoLanguage
+---@type octocolors.language
 local M = {}
 
 function M.highlights(c)

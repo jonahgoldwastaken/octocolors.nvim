@@ -3,15 +3,15 @@ local M = {}
 
 local _loaded_style = ""
 
----@type table<string, OctoPalette>
+---@type table<string, octocolors.palette>
 local _colors = {}
 
----@class OctoPalette
----@field ansi OctoAnsi
----@field scale OctoScale
----@field colors OctoColors
+---@class octocolors.palette
+---@field ansi octocolors.ansi
+---@field scale octocolors.scale
+---@field colors octocolors.colors
 
----@class OctoAnsi
+---@class octocolors.ansi
 ---@field black string
 ---@field blackBright string
 ---@field white string
@@ -30,7 +30,7 @@ local _colors = {}
 ---@field cyan string
 ---@field cyanBright string
 
----@class OctoScale
+---@class octocolors.scale
 ---@field black string
 ---@field white string
 ---@field gray string[]
@@ -43,7 +43,7 @@ local _colors = {}
 ---@field pink string[]
 ---@field coral string[]
 
----@return { scale: OctoScale, ansi: OctoAnsi, colors: OctoColors }|nil
+---@return { scale: octocolors.scale, ansi: octocolors.ansi, colors: octocolors.colors }|nil
 function M.setup()
 	local opts = require("octocolors.config").options
 
@@ -55,7 +55,7 @@ function M.setup()
 
 	if _colors[req_str] then return _colors[req_str] end
 
-	---@type boolean, OctoScale
+	---@type boolean, octocolors.scale
 	local p_ok, scale = pcall(require, "octocolors.colors." .. req_str)
 	if not p_ok then
 		vim.notify("octocolors: invalid background option: " .. req_str, vim.log.levels.ERROR)
@@ -64,12 +64,12 @@ function M.setup()
 
 	_loaded_style = req_str
 
-	---@type OctoPalette
+	---@type octocolors.palette
 	local palette = { scale = scale }
 	local bg = util.light_dark(scale.white, scale.gray[10])
 	local overlay = util.light_dark(scale.white, scale.gray[9])
 
-	---@class OctoColors
+	---@class octocolors.colors
 	palette.colors = {
 		-- UI
 		fg = util.light_dark(scale.gray[9], scale.gray[2]),

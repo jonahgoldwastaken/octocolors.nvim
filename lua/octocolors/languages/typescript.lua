@@ -1,5 +1,5 @@
----@class OctoLanguage
----@field highlights fun(c: OctoColors): Highlights
+---@class octocolors.language
+---@field highlights fun(c: octocolors.colors): Highlights
 local M = {}
 
 function M.highlights(c)

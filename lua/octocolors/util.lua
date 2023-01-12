@@ -81,7 +81,7 @@ end
 
 function M.on_background_change() M.load(require("octocolors.theme").setup()) end
 
----@param lang OctoLanguage
+---@param lang octocolors.language
 function M.load_highlights(lang)
 	local c = require("octocolors.colors").get_colors()
 	if c == nil then return end
@@ -96,7 +96,7 @@ function M.on_file_type()
 	M.load_highlights(lang)
 end
 
---- @param config Config
+--- @param config octocolors.config
 function M.autocmds(config, filetypes)
 	vim.cmd([[augroup OctoColors]])
 	vim.cmd([[  autocmd!]])
