@@ -125,10 +125,6 @@ function M.setup(scheme)
 		SpellCap = { sp = co.yellow, undercurl = true }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
 		SpellLocal = { sp = co.blue, undercurl = true }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
 		SpellRare = { sp = light_dark(scale.gray[7], scale.gray[3]), undercurl = true }, -- Word that is recognized by the spellchecker as one that is hardly ever used.  |spell| Combined with the highlighting used otherwise.
-		StatusLine = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		}, -- status line of current window
 		StatusLineNC = {
 			fg = co.comment,
 			bg = co.bg.default,
@@ -137,6 +133,7 @@ function M.setup(scheme)
 			fg = co.fg,
 			bg = co.bg.default,
 		}, -- tab pages line, not active tab page label
+		StatusLine = { fg = co.fg, bg = co.bg.statusline }, -- status line of current window
 		TabLineFill = { bg = co.bg.sidebar }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = co.blue2, bold = true }, -- titles for output from ":set all", ":autocmd" etc.

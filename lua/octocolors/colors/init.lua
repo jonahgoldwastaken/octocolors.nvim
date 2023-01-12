@@ -69,7 +69,9 @@ function M.setup()
 			default = bg,
 			overlay = overlay,
 			sidebar = util.light_dark(scale.gray[1], scale.black),
+			statusline = util.light_dark(scale.white, scale.gray[9]),
 		},
+		border = util.light_dark(scale.gray[3], scale.gray[7]),
 		blue = util.light_dark(scale.blue[6], scale.blue[4]),
 		blue2 = util.light_dark(scale.blue[7], scale.blue[3]),
 		blue3 = util.light_dark(scale.blue[9], scale.blue[2]),
@@ -123,11 +125,6 @@ function M.setup()
 				),
 			},
 		},
-		statusline = {
-			bg = util.light_dark(scale.white, scale.gray[9]),
-			fg = util.light_dark(scale.gray[9], scale.gray[2]),
-		},
-		border = util.light_dark(scale.gray[3], scale.gray[7]),
 		rainbow = {
 			util.light_dark(scale.blue[6], scale.blue[3]),
 			util.light_dark(scale.green[6], scale.green[3]),
