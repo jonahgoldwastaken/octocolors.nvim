@@ -214,8 +214,9 @@ function M.setup(scheme)
 		-- Ignore = { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
 		Error = { fg = co.git.delete.fg }, -- (preferred) any erroneous construct
-		Todo = { fg = co.bg.default, bg = co.yellow }, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		Todo = { fg = co.yellow }, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 		-- ["@text.todo"] = { },
+		["@text.todo.checked"] = { fg = co.green2 },
 
 		qfLineNr = { fg = co.red },
 		qfFileName = { fg = co.blue },
@@ -334,7 +335,7 @@ function M.setup(scheme)
 		TelescopeTitle = { fg = co.fg },
 		TelescopePromptPrefix = { fg = co.fg },
 
-		-- Cmp
+		-- nvim-cmp
 		CmpDocumentation = { link = "NormalFloat" },
 		CmpDocumentationBorder = { link = "FloatBorder" },
 		CmpItemAbbrDeprecated = { fg = co.comment, strikethrough = true },
@@ -368,7 +369,7 @@ function M.setup(scheme)
 		CmpItemKindModule = { fg = co.cmp.red },
 		CmpItemKindStruct = { fg = co.cmp.orange },
 
-		-- Noice
+		-- noice.nvim
 		NoiceCmdlinePopupBorder = { fg = co.border, bg = co.bg.overlay },
 		NoiceCmdlinePopup = { fg = co.fg, bg = co.bg.overlay },
 		NoiceCmdlineIcon = { fg = co.fg },
@@ -403,7 +404,7 @@ function M.setup(scheme)
 		NoiceLspProgressSpinner = { fg = co.fg },
 		NoiceLspProgressClient = { fg = co.fg, bold = true },
 
-		-- Notify
+		-- nvim-notify
 		NotifyERRORBorder = { fg = co.red, bg = co.bg.overlay },
 		NotifyWARNBorder = { fg = co.yellow, bg = co.bg.overlay },
 		NotifyINFOBorder = { fg = co.border, bg = co.bg.overlay },
@@ -430,8 +431,10 @@ function M.setup(scheme)
 
 		MiniIdentscopeSymbol = { fg = co.fg },
 
+		-- nvim-web-devicons
 		DevIconDefault = { fg = co.fg },
 
+		-- mason.nvim
 		MasonHighlight = { fg = co.blue },
 		MasonHighlightBlock = { fg = co.bg.default, bg = co.blue },
 		MasonHighlightBlockBold = { fg = co.bg.default, bg = co.blue, bold = true },
@@ -444,6 +447,7 @@ function M.setup(scheme)
 		MasonHeaderSecondary = { fg = co.bg.default, bg = co.blue },
 		MasonHeaderSecondaryBold = { fg = co.bg.default, bg = co.blue, bold = true },
 
+		-- hop.nvim
 		HopNextKey = { fg = co.green2 },
 		HopNextKey1 = { fg = co.yellow },
 		HopNextKey2 = { fg = co.match },

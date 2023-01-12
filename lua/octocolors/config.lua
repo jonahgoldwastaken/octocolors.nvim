@@ -3,14 +3,13 @@ local M = {}
 --- @class Config
 local defaults = {
 	theme = "auto", -- May be "light", "dark" or "auto"
-	terminal_colors = false, -- Highlight colors when using `:terminal`
 	styles = {
 		comments = { italic = true },
 		keywords = {},
 		functions = {},
 		variables = {},
 	},
-	sidebars = { "qf", "vista_kind", "terminal", "packer", "help" },
+	sidebars = { "qf", "vista_kind", "terminal", "help" }, -- Darkens the background for these filetypes
 	lazy_load_syntax = true, -- Lazy load custom syntax highlights on FileType event
 }
 
