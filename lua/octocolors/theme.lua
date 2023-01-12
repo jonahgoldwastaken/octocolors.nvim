@@ -15,7 +15,7 @@ local M = {}
 
 --- @alias Highlights table<string,Highlight>
 
---- @param scheme "default"|nil
+--- @param scheme "default"|"dimmed"|nil
 --- @return Theme
 function M.setup(scheme)
 	scheme = scheme or "default"

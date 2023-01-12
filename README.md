@@ -38,6 +38,10 @@ Plug 'jonahgoldwastaken/octocolors.nvim', { 'branch': 'main' }
 ```vim
 " VimScript
 colorscheme octocolors
+
+colorscheme octocolors-dark
+colorscheme octocolors-dark-dimmed
+colorscheme octocolors-light
 ```
 
 ```lua
@@ -65,7 +69,8 @@ When `theme` is set to `auto`, octocolors uses `vim.o.background` to select the 
 
 ```lua
 require("octocolors").setup({
-	theme = "auto", -- May be "light", "dark" or "auto"
+	background = "auto", -- May be "light", "dark" or "auto"
+	style = "default", -- May be "default" or "dimmed", currently only affects the dark theme
 	styles = {
 		-- Customise the styling of certain syntax groups
 		-- All attr-list values for `:help nvim_set_hl` are valid
@@ -74,8 +79,8 @@ require("octocolors").setup({
 		functions = {},
 		variables = {},
 	},
-	sidebars = { "qf", "vista_kind", "terminal", "help" }, -- Set a darker background for sidebar-like windows. "nvim_tree" or "neotree" are nice additions here
-	lazy_load_syntax = true, -- Lazy load custom syntax highlights on FileType event for different
+	sidebars = { "qf", "vista_kind", "terminal", "help" }, -- Darkens the background for these filetypes
+	lazy_load_syntax = true, -- Lazy load custom syntax highlights on FileType event
 })
 ```
 

@@ -16,8 +16,10 @@ local M = {}
 ---@type octocolors.config
 local defaults = {
 	background = "auto", -- May be "light", "dark" or "auto"
-	style = "default", -- May be "default" or "dimmed"
+	style = "default", -- May be "default" or "dimmed", currently only affects the dark theme
 	styles = {
+		-- Customise the styling of certain syntax groups
+		-- All attr-list values for `:help nvim_set_hl` are valid
 		comments = { italic = true },
 		keywords = {},
 		functions = {},

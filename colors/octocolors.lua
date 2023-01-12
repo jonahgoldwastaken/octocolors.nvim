@@ -1,1 +1,1 @@
-require("octocolors").load()
+require("octocolors")._load()
