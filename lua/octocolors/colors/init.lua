@@ -3,7 +3,7 @@ local M = {}
 
 local _loaded_style = ""
 
----@type OctoPalette
+---@type table<string, OctoPalette>
 local _colors = {}
 
 ---@class OctoPalette
@@ -47,23 +47,31 @@ local _colors = {}
 function M.setup()
 	local opts = require("octocolors.config").options
 
-	local style = opts.theme == "auto" and vim.o.background or opts.theme
-	if style == _loaded_style then return _colors end
+	local background = opts.background == "auto" and vim.o.background or opts.background
+	local style = opts.style
+	local req_str = background .. "." .. style
+	if req_str == "light.dimmed" then req_str = "light.init" end
+	req_str = req_str:gsub("default", "init")
 
-	---@type boolean, OctoPalette
-	local p_ok, palette = pcall(require, "octocolors.colors." .. style)
+	if _colors[req_str] then return _colors[req_str] end
+
+	---@type boolean, OctoScale
+	local p_ok, scale = pcall(require, "octocolors.colors." .. req_str)
 	if not p_ok then
-		vim.notify("octocolors: invalid background option: " .. style, vim.log.levels.ERROR)
+		vim.notify("octocolors: invalid background option: " .. req_str, vim.log.levels.ERROR)
 		return
 	end
-	_loaded_style = style
 
-	local scale = palette.scale
+	_loaded_style = req_str
+
+	---@type OctoPalette
+	local palette = { scale = scale }
 	local bg = util.light_dark(scale.white, scale.gray[10])
 	local overlay = util.light_dark(scale.white, scale.gray[9])
 
 	---@class OctoColors
 	palette.colors = {
+		-- UI
 		fg = util.light_dark(scale.gray[9], scale.gray[2]),
 		bg = {
 			default = bg,
@@ -72,6 +80,8 @@ function M.setup()
 			statusline = util.light_dark(scale.white, scale.gray[9]),
 		},
 		border = util.light_dark(scale.gray[3], scale.gray[7]),
+
+		-- Colors
 		blue = util.light_dark(scale.blue[6], scale.blue[4]),
 		blue2 = util.light_dark(scale.blue[7], scale.blue[3]),
 		blue3 = util.light_dark(scale.blue[9], scale.blue[2]),
@@ -87,6 +97,8 @@ function M.setup()
 		match = util.light_dark(scale.yellow[5], scale.yellow[6]),
 		match_highlight = util.alpha(scale.yellow[2], bg, 0.5),
 		link = util.light_dark(scale.blue[9], scale.blue[2]),
+
+		-- Diagnostics
 		diagnostic = {
 			error = {
 				fg = util.light_dark(scale.red[6], scale.red[5]),
@@ -105,6 +117,8 @@ function M.setup()
 				bg = util.light_dark(scale.gray[1], scale.gray[8]),
 			},
 		},
+
+		-- Git
 		git = {
 			add = {
 				fg = util.light_dark(scale.green[6], scale.green[3]),
@@ -125,6 +139,8 @@ function M.setup()
 				),
 			},
 		},
+
+		-- Bracket pair rainbow
 		rainbow = {
 			util.light_dark(scale.blue[6], scale.blue[3]),
 			util.light_dark(scale.green[6], scale.green[3]),
@@ -133,6 +149,8 @@ function M.setup()
 			util.light_dark(scale.pink[6], scale.pink[3]),
 			util.light_dark(scale.purple[6], scale.purple[3]),
 		},
+
+		-- Completion
 		cmp = {
 			blue = util.light_dark(scale.blue[9], scale.blue[3]),
 			blue2 = util.light_dark(scale.blue[7], scale.blue[4]),
@@ -143,10 +161,31 @@ function M.setup()
 			red = util.light_dark(scale.red[7], scale.red[4]),
 		},
 	}
-	_colors = palette
-	return _colors
+
+	palette.ansi = {
+		black = util.light_dark(scale.gray[10], scale.gray[6]),
+		blackBright = util.light_dark(scale.gray[7], scale.gray[5]),
+		white = util.light_dark(scale.gray[6], scale.gray[3]),
+		whitebright = util.light_dark(scale.gray[5], scale.white),
+		gray = util.light_dark(scale.gray[6], scale.gray[5]),
+		red = util.light_dark(scale.red[6], scale.red[4]),
+		redbright = util.light_dark(scale.red[7], scale.red[3]),
+		green = util.light_dark(scale.green[7], scale.green[4]),
+		greenBright = util.light_dark(scale.green[6], scale.green[3]),
+		yellow = util.light_dark(scale.yellow[8], scale.yellow[4]),
+		yellowBright = util.light_dark(scale.yellow[7], scale.yellow[3]),
+		blue = util.light_dark(scale.blue[6], scale.blue[4]),
+		blueBright = util.light_dark(scale.blue[5], scale.blue[3]),
+		magenta = util.light_dark(scale.purple[6], scale.purple[4]),
+		magentaBright = util.light_dark(scale.purple[5], scale.purple[3]),
+		cyan = util.light_dark("#1b7c83", "#39c5cf"),
+		cyanBright = util.light_dark("#3192aa", "#56d4dd"),
+	}
+
+	_colors[req_str] = palette
+	return _colors[req_str]
 end
 
-function M.get_colors() return _colors end
+function M.get_colors() return _colors[_loaded_style] end
 
 return M

@@ -2,7 +2,8 @@ local M = {}
 
 --- @class Config
 local defaults = {
-	theme = "auto", -- May be "light", "dark" or "auto"
+	background = "auto", -- May be "light", "dark" or "auto"
+	style = "default", -- May be "default" or "dimmed"
 	styles = {
 		comments = { italic = true },
 		keywords = {},
