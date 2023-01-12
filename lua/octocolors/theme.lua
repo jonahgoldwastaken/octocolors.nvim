@@ -41,7 +41,6 @@ function M.setup(scheme)
 	local alpha = util.alpha
 
 	theme.highlights = {
-		Comment = { fg = co.comment, style = options.styles.comments }, -- any comment
 		ColorColumn = {}, -- used for the columns set with 'colorcolumn'
 		Conceal = {}, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = co.blue }, -- character under the cursor
@@ -50,15 +49,9 @@ function M.setup(scheme)
 		CursorColumn = { link = "CursorLine" }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
 		CursorLine = { bg = co.bg.overlay }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
 		Directory = { fg = co.fg }, -- directory names (and other special names in listings)
-		DiffAdd = {
-			bg = co.git.add.bg,
-		}, -- diff mode: Added line |diff.txt|
-		DiffChange = {
-			bg = co.git.change.bg,
-		}, -- diff mode: Changed line |diff.txt|
-		DiffDelete = {
-			bg = co.git.delete.bg,
-		},
+		DiffAdd = { bg = co.git.add.bg }, -- diff mode: Added line |diff.txt|
+		DiffChange = { bg = co.git.change.bg }, -- diff mode: Changed line |diff.txt|
+		DiffDelete = { bg = co.git.delete.bg },
 		DiffText = { fg = co.whitespace }, -- diff mode: Changed text within a changed line |diff.txt|
 		EndOfBuffer = { fg = co.whitespace }, -- filler lines (~) after the end of the buffer.  By default, this is highlighted like |hl-NonText|.
 		-- TermCursor  = { }, -- cursor in a focused terminal
@@ -68,14 +61,8 @@ function M.setup(scheme)
 		WinSeparator = { fg = co.border, bg = "NONE" }, -- the column separating vertically split windows
 		Folded = {}, -- line used for closed folds
 		FoldColumn = {}, -- 'foldcolumn'
-		SignColumn = {
-			fg = light_dark(scale.gray[1], scale.gray[10]),
-			bg = co.bg.overlay,
-		}, -- column where |signs| are displayed
-		SignColumnSB = {
-			fg = light_dark(scale.gray[1], scale.gray[8]),
-			bg = co.bg.default,
-		}, -- column where |signs| are displayed
+		SignColumn = { fg = light_dark(scale.gray[1], scale.gray[10]), bg = co.bg.overlay }, -- column where |signs| are displayed
+		SignColumnSB = { fg = light_dark(scale.gray[1], scale.gray[8]), bg = co.bg.default }, -- column where |signs| are displayed
 		Substitute = { bg = light_dark(scale.yellow[5], scale.yellow[6]) }, -- |:substitute| replacement text highlighting
 		LineNr = { fg = scale.gray[5] }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		CursorLineNr = { fg = co.fg }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
@@ -85,39 +72,18 @@ function M.setup(scheme)
 		-- MsgSeparator= { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
 		MoreMsg = { fg = co.blue }, -- |more-prompt|
 		NonText = { fg = light_dark(scale.gray[3], scale.gray[5]) }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-		Normal = {
-			fg = co.fg,
-			bg = co.bg.default,
-		}, -- normal text
-		NormalNC = {
-			fg = co.fg,
-			bg = co.bg.default,
-		}, -- normal text in non-current windows
-		NormalSB = {
-			fg = co.fg,
-			bg = co.bg.sidebar,
-		}, -- normal text in sidebar
-		NormalFloat = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		}, -- Normal text in floating windows.
+		Normal = { fg = co.fg, bg = co.bg.default }, -- normal text
+		NormalNC = { fg = co.fg, bg = co.bg.default }, -- normal text in non-current windows
+		NormalSB = { fg = co.fg, bg = co.bg.sidebar }, -- normal text in sidebar
+		NormalFloat = { fg = co.fg, bg = co.bg.overlay }, -- Normal text in floating windows.
 		FloatBorder = { fg = co.border, bg = co.bg.overlay },
-		Pmenu = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		}, -- Popup menu: normal item.
-		PmenuSel = {
-			fg = co.fg,
-			bg = alpha(light_dark(scale.gray[4], scale.gray[5]), co.bg.default, 0.4),
-		}, -- Popup menu: selected item.
+		Pmenu = { fg = co.fg, bg = co.bg.overlay }, -- Popup menu: normal item.
+		PmenuSel = { fg = co.bg.default, bg = co.selection }, -- Popup menu: selected item.
 		PmenuSbar = { bg = co.bg.overlay }, -- Popup menu: scrollbar.
 		PmenuThumb = { bg = alpha(scale.gray[5], co.bg.overlay, 0.2) }, -- Popup menu: Thumb of the scrollbar.
 		Question = { fg = co.blue }, -- |hit-enter| prompt and yes/no questions
 		QuickFixLine = { bg = alpha(scale.blue[7], co.bg.overlay, 0.4) }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
-		Search = {
-			fg = "NONE",
-			bg = co.match_highlight,
-		}, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
+		Search = { fg = "NONE", bg = co.match_highlight }, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
 		IncSearch = { bg = co.match }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		CurSearch = { link = "IncSearch" },
 		SpecialKey = { fg = co.whitespace }, -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
@@ -125,18 +91,13 @@ function M.setup(scheme)
 		SpellCap = { sp = co.yellow, undercurl = true }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
 		SpellLocal = { sp = co.blue, undercurl = true }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
 		SpellRare = { sp = light_dark(scale.gray[7], scale.gray[3]), undercurl = true }, -- Word that is recognized by the spellchecker as one that is hardly ever used.  |spell| Combined with the highlighting used otherwise.
-		StatusLineNC = {
-			fg = co.comment,
-			bg = co.bg.default,
-		}, -- status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-		TabLine = {
-			fg = co.fg,
-			bg = co.bg.default,
-		}, -- tab pages line, not active tab page label
 		StatusLine = { fg = co.fg, bg = co.bg.statusline }, -- status line of current window
+		StatusLineNC = { fg = co.comment, bg = co.bg.default }, -- status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+		TabLine = { fg = co.fg, bg = co.bg.default }, -- tab pages line, not active tab page label
 		TabLineFill = { bg = co.bg.sidebar }, -- tab pages line, where there are no labels
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = co.blue2, bold = true }, -- titles for output from ":set all", ":autocmd" etc.
+		["@text.title"] = { fg = co.fg },
 		Visual = { fg = co.bg.default, bg = co.selection }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = co.yellow }, -- warning messages
@@ -149,84 +110,112 @@ function M.setup(scheme)
 		-- default,
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
-		Constant = { fg = co.blue2 }, -- (preferred) any constant
-		String = { fg = co.blue3 }, --   a string constant: "this is a string"
-		Character = { link = "String" }, --  a character constant: 'c', '\n'
-		Number = { fg = co.blue2 }, --   a number constant: 234, 0xff
-		Boolean = { link = "Number" }, --  a boolean constant: TRUE, false
-		Float = { link = "Number" }, --    a floating point constant: 2.3e10
+		Comment = { fg = co.comment, style = options.styles.comments }, -- any comment
+		-- ["@comment"] = { },
+		-- ["@text.literal"] = { },
 
-		Identifier = {
-			fg = co.orange,
-			style = options.styles.variables,
-		}, -- (preferred) any variable name
-		["@variable"] = {
-			fg = co.fg,
-			style = options.styles.variables,
-		},
+		Constant = { fg = co.blue2 }, -- (preferred) any constant
+		["@enumMember"] = { fg = co.blue2 },
+		-- ["@constant"] = { },
+		String = { fg = co.blue3 }, --   a string constant: "this is a string"
+		-- ["@string"] = { },
+		Character = { link = "String" }, --  a character constant: 'c', '\n'
+		-- ["@character"] = { },
+		Number = { fg = co.blue2 }, --   a number constant: 234, 0xff
+		-- ["@number"] = { },
+		Boolean = { link = "Number" }, --  a boolean constant: TRUE, false
+		-- ["@boolean"] = { },
+		Float = { link = "Number" }, --    a floating point constant: 2.3e10
+		-- ["@float"] = { },
+
+		Identifier = { fg = co.orange, style = options.styles.variables }, -- (preferred) any variable name
+		["@variable"] = { fg = co.fg, style = options.styles.variables },
 		["@field"] = { fg = co.fg },
-		Function = {
-			fg = co.purple,
-			style = options.styles.functions,
-		}, -- function name (also: methods for classes)
 		["@property"] = { fg = co.fg },
-		["@constructor"] = { fg = co.orange },
+		["@text.reference"] = { fg = co.link, underline = true, bold = true },
+		["@interface"] = { fg = co.blue2 },
+		["@decorator"] = { fg = co.blue },
+		["@modifier"] = { fg = co.fg },
+		-- ["@event"] = { },
+		-- ["@namespace"] = { },
+		-- ["@parameter"] = { },
+		Function = { fg = co.purple, style = options.styles.functions }, -- function name (also: methods for classes)
+		-- ["@function"] = { },
+		-- ["@method"] = { },
 
 		Statement = { fg = co.red }, -- (preferred) any statement
 		-- Conditional   = { }, --  if, then, else, endif, switch, etc.
+		-- ["@conditional"] = { },
 		-- Repeat        = { }, --   for, do, while, etc.
+		-- ["@repeat"] = { },
 		-- Label         = { }, --    case, default, etc.
+		-- ["@label"] = { },
 		Operator = { link = "Statement" }, -- "sizeof", "+", "*", etc.
+		-- ["@operator"] = { },
 		Keyword = { link = "Statement", style = options.styles.keywords }, --  any other keyword
+		-- ["@keyword"] = { },
 		-- Exception     = { }, --  try, catch, throw
+		-- ["@exception"] = { },
 
 		PreProc = { fg = co.red }, -- (preferred) generic Preprocessor
+		-- ["@preproc"] = { },
 		-- Include       = { }, --  preprocessor #include
+		-- ["@include"] = { },
 		-- Define        = { }, --   preprocessor #define
-		Macro = { fg = co.fg }, --    same as Define
+		-- ["@define"] = { },
+		-- ["@function.macro"] = { },
+		Macro = { fg = co.orange }, --    same as Define
+		-- ["@macro"] = { }, -- Macro
+		-- ["@constant.macro"] = { },
 		-- PreCondit     = { }, --  preprocessor #if, #else, #endif, etc.
 
 		Type = { fg = co.red }, -- (preferred) int, long, char, etc.
-		-- StorageClass  = { }, -- static, register, volatile, etc.
-		-- Structure     = { }, --  struct, union, enum, etc.
-		-- Typedef       = { }, --  A typedef
-
-		["@class"] = { fg = co.red },
-		["@struct"] = { fg = co.orange },
+		-- ["@type"] = { },
 		["@enum"] = { fg = co.orange },
-		["@enumMember"] = { fg = co.blue2 },
-		-- ["@event"] = { },
-		["@interface"] = { fg = co.blue2 },
-		["@modifier"] = { fg = co.fg },
-		["@regexp"] = { fg = co.green },
-		--[[ ["@typeParameter"] = { fg = co.blue }, ]]
-		--[[ ["@decorator"] = { fg = co.blue }, ]]
+		["@typeParameter"] = { fg = co.blue },
+		-- StorageClass  = { }, -- static, register, volatile, etc.
+		-- ["@storageclass"] = { },
+		-- Structure     = { }, --  struct, union, enum, etc.
+		["@class"] = { fg = co.orange },
+		["@struct"] = { fg = co.orange },
+		-- ["@structure"] = { },
+		-- Typedef       = { }, --  A typedef
+		-- ["@type.definition"] = { },
 
 		Special = { fg = co.blue3 }, -- (preferred) any special symbol
+		["@constructor"] = { fg = co.orange },
+		-- ["@constant.builtin"] = { },
+		-- ["@function.builtin"] = { },
 		-- SpecialChar   = { }, --  special character in a constant
-		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, --    you can use CTRL-] on this
+		["@regexp"] = { fg = co.green },
+		-- ["@string.escape"] = { },
+		-- ["@string.special"] = { },
+		-- ["@character.special"] = { },
+		Tag = { fg = light_dark(scale.green[7], scale.green[2]) }, -- you can use CTRL-] on this
+		-- ["@tag"] = { },
 		["@tag.attribute"] = { fg = co.blue2 },
 		["@tag.delimiter"] = { fg = co.fg },
 		["@tag.punctuation"] = { fg = co.fg },
-		["@punctuation.bracket"] = { fg = co.fg },
 		-- Delimiter     = { }, --  character that needs attention
+		-- ["@punctuation"] = { },
+		["@punctuation.bracket"] = { fg = co.fg },
 		-- SpecialComment= { }, -- special things inside a comment
 		-- Debug         = { }, --    debugging statements
+		-- ["@debug"] = { },
 
+		["@text"] = { fg = co.fg },
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
+		-- ["@text.uri"] = { },
+		-- ["@text.underline"] = { },
 		Bold = { bold = true },
 		Italic = { italic = true },
-		["@text.emphasis"] = { italic = true },
-		["@text.reference"] = { fg = co.link, underline = true, bold = true },
 
 		-- ("Ignore", below, may be invisible...)
 		-- Ignore = { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
 		Error = { fg = co.git.delete.fg }, -- (preferred) any erroneous construct
-		Todo = {
-			fg = co.bg.default,
-			bg = co.yellow,
-		}, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		Todo = { fg = co.bg.default, bg = co.yellow }, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		-- ["@text.todo"] = { },
 
 		qfLineNr = { fg = co.red },
 		qfFileName = { fg = co.blue },
@@ -259,35 +248,20 @@ function M.setup(scheme)
 		LspReferenceRead = { link = "LspReferenceText" }, -- used for highlighting "read" references
 		LspReferenceWrite = { link = "LspReferenceText" }, -- used for highlighting "write" references
 
-		DiagnosticError = { fg = co.git.delete.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticWarn = { fg = co.yellow }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticInfo = { fg = co.blue }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
-		DiagnosticHint = { fg = light_dark(scale.gray[7], scale.gray[3]) }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticError = { fg = co.diagnostic.error.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticWarn = { fg = co.diagnostic.warning.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticInfo = { fg = co.diagnostic.info.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
+		DiagnosticHint = { fg = co.diagnostic.hint.fg }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
 
-		DiagnosticVirtualTextError = {
-			fg = co.diagnostic.error.fg,
-			bg = co.diagnostic.error.bg,
-		}, -- Used for "Error" diagnostic virtual text
-		DiagnosticVirtualTextWarn = {
-			fg = co.diagnostic.warning.fg,
-			bg = co.diagnostic.warning.bg,
-		}, -- Used for "Warning" diagnostic virtual text
-		DiagnosticVirtualTextInfo = {
-			fg = co.diagnostic.info.fg,
-			bg = co.diagnostic.info.bg,
-		}, -- Used for "Information" diagnostic virtual text
-		DiagnosticVirtualTextHint = {
-			fg = co.diagnostic.hint.fg,
-			bg = co.diagnostic.hint.bg,
-		}, -- Used for "Hint" diagnostic virtual text
+		DiagnosticVirtualTextError = { fg = co.diagnostic.error.fg, bg = co.diagnostic.error.bg }, -- Used for "Error" diagnostic virtual text
+		DiagnosticVirtualTextWarn = { fg = co.diagnostic.warning.fg, bg = co.diagnostic.warning.bg }, -- Used for "Warning" diagnostic virtual text
+		DiagnosticVirtualTextInfo = { fg = co.diagnostic.info.fg, bg = co.diagnostic.info.bg }, -- Used for "Information" diagnostic virtual text
+		DiagnosticVirtualTextHint = { fg = co.diagnostic.hint.fg, bg = co.diagnostic.hint.bg }, -- Used for "Hint" diagnostic virtual text
 
-		DiagnosticUnderlineError = { undercurl = true, sp = co.red }, -- Used to underline "Error" diagnostics
-		DiagnosticUnderlineWarn = {
-			undercurl = true,
-			sp = co.yellow,
-		}, -- Used to underline "Warning" diagnostics
-		DiagnosticUnderlineInfo = { undercurl = true, sp = co.blue }, -- Used to underline "Information" diagnostics
-		DiagnosticUnderlineHint = { undercurl = true, sp = light_dark(scale.gray[7], scale.gray[3]) }, -- Used to underline "Hint" diagnostics
+		DiagnosticUnderlineError = { undercurl = true, sp = co.diagnostic.error.fg }, -- Used to underline "Error" diagnostics
+		DiagnosticUnderlineWarn = { undercurl = true, sp = co.diagnostic.warning.fg }, -- Used to underline "Warning" diagnostics
+		DiagnosticUnderlineInfo = { undercurl = true, sp = co.diagnostic.info.fg }, -- Used to underline "Information" diagnostics
+		DiagnosticUnderlineHint = { undercurl = true, sp = co.diagnostic.hint.fg }, -- Used to underline "Hint" diagnostics
 
 		LspCodeLens = { link = "Comment" },
 
@@ -300,10 +274,7 @@ function M.setup(scheme)
 		rainbowcol6 = { fg = co.rainbow[6] },
 
 		-- NvimTree
-		NvimTreeNormal = {
-			fg = co.fg,
-			bg = co.bg.sidebar,
-		},
+		NvimTreeNormal = { fg = co.fg, bg = co.bg.sidebar },
 		NvimTreeEndOfBuffer = { fg = co.bg.sidebar },
 		NvimTreeRootFolder = { fg = co.fg, bold = true },
 		NvimTreeGitDirty = { fg = co.yellow },
@@ -322,14 +293,8 @@ function M.setup(scheme)
 		NvimTreeOpenedFile = { fg = scale.blue[3] },
 
 		-- Neotree
-		NeoTreeNormal = {
-			fg = co.fg,
-			bg = co.bg.sidebar,
-		},
-		NeoTreeNormalNC = {
-			fg = co.fg,
-			bg = co.bg.sidebar,
-		},
+		NeoTreeNormal = { fg = co.fg, bg = co.bg.sidebar },
+		NeoTreeNormalNC = { fg = co.fg, bg = co.bg.sidebar },
 		NeoTreeEndOfBuffer = { fg = co.bg.sidebar },
 		NeoTreeRootName = { fg = co.fg, bold = true },
 		NeoTreeGitModified = { fg = co.yellow },
@@ -404,14 +369,8 @@ function M.setup(scheme)
 		CmpItemKindStruct = { fg = co.cmp.orange },
 
 		-- Noice
-		NoiceCmdlinePopupBorder = {
-			fg = co.border,
-			bg = co.bg.overlay,
-		},
-		NoiceCmdlinePopup = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
+		NoiceCmdlinePopupBorder = { fg = co.border, bg = co.bg.overlay },
+		NoiceCmdlinePopup = { fg = co.fg, bg = co.bg.overlay },
 		NoiceCmdlineIcon = { fg = co.fg },
 		NoiceCmdlinePrompt = { fg = co.fg },
 		NoiceCmdlinePopupBorderInput = { fg = co.border },
@@ -445,22 +404,10 @@ function M.setup(scheme)
 		NoiceLspProgressClient = { fg = co.fg, bold = true },
 
 		-- Notify
-		NotifyERRORBorder = {
-			fg = co.red,
-			bg = co.bg.overlay,
-		},
-		NotifyWARNBorder = {
-			fg = co.yellow,
-			bg = co.bg.overlay,
-		},
-		NotifyINFOBorder = {
-			fg = co.border,
-			bg = co.bg.overlay,
-		},
-		NotifyDEBUGBorder = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
+		NotifyERRORBorder = { fg = co.red, bg = co.bg.overlay },
+		NotifyWARNBorder = { fg = co.yellow, bg = co.bg.overlay },
+		NotifyINFOBorder = { fg = co.border, bg = co.bg.overlay },
+		NotifyDEBUGBorder = { fg = co.fg, bg = co.bg.overlay },
 		NotifyTRACEBorder = { fg = scale.purple[9], bg = co.bg.overlay },
 
 		NotifyERRORIcon = { fg = co.red },
@@ -475,26 +422,11 @@ function M.setup(scheme)
 		NotifyDEBUGTitle = { fg = co.fg },
 		NotifyTRACETitle = { fg = scale.purple[9] },
 
-		NotifyERRORBody = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
-		NotifyWARNBody = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
-		NotifyINFOBody = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
-		NotifyDEBUGBody = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
-		NotifyTRACEBody = {
-			fg = co.fg,
-			bg = co.bg.overlay,
-		},
+		NotifyERRORBody = { fg = co.fg, bg = co.bg.overlay },
+		NotifyWARNBody = { fg = co.fg, bg = co.bg.overlay },
+		NotifyINFOBody = { fg = co.fg, bg = co.bg.overlay },
+		NotifyDEBUGBody = { fg = co.fg, bg = co.bg.overlay },
+		NotifyTRACEBody = { fg = co.fg, bg = co.bg.overlay },
 
 		MiniIdentscopeSymbol = { fg = co.fg },
 

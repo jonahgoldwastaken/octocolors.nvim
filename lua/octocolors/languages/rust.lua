@@ -4,7 +4,7 @@ local M = {}
 function M.highlights(c)
 	return {
 		-- ["@punctuation.delimiter.rust"] = { fg = c.fg },
-		--[[ ["@type.rust"] = { fg = c.orange }, ]]
+		-- ["@type.rust"] = { fg = c.orange },
 		["@function.macro.rust"] = { fg = c.fg },
 		["@formatSpecifier"] = { fg = c.red },
 		["@type.builtin.rust"] = { fg = c.blue2 },
