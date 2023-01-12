@@ -21,14 +21,14 @@ REQUIREMENTS                                    *octocolors.nvim-requirements*
 
 
 - Neovim 0.9 (nightly) for now, as I haven’t tested this on older versions
-- nvim-treesitter <https://github.com/nvim-treesitter/nvim-treesitter>
+- TreeSitter <https://github.com/nvim-treesitter/nvim-treesitter>
 
 
 INSTALLATION                                    *octocolors.nvim-installation*
 
 Install with your favourite package manager:
 
-LAZY <HTTPS://GITHUB.COM/FOLKE/LAZY.NVIM> ~
+**lazy <https://github.com/folke/lazy.nvim>**
 
 >lua
     {
@@ -39,14 +39,14 @@ LAZY <HTTPS://GITHUB.COM/FOLKE/LAZY.NVIM> ~
 <
 
 
-PACKER <HTTPS://GITHUB.COM/WBTHOMASON/PACKER.NVIM> ~
+**packer <https://github.com/wbthomason/packer.nvim>**
 
 >lua
     use "jonahgoldwastaken/octocolors.nvim"
 <
 
 
-             *octocolors.nvim-vim-plug-<https://github.com/junegunn/vim-plug>*
+**vim-plug <https://github.com/junegunn/vim-plug>**
 
 >vim
     Plug 'jonahgoldwastaken/octocolors.nvim', { 'branch': 'main' }
