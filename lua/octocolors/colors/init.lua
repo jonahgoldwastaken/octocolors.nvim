@@ -100,7 +100,11 @@ function M.setup()
 		visual = {
 			fg = util.high_contrast("NONE", util.light_dark(scale.white, scale.gray[10])),
 			bg = util.high_contrast(
-				util.alpha(util.light_dark(scale.blue[6], scale.blue[4]), bg, 0.2),
+				util.alpha(
+					util.light_dark(scale.blue[6], scale.blue[4]),
+					util.light_dark("#ffffff", "#000000"),
+					0.4
+				),
 				util.light_dark(scale.gray[10], scale.gray[1])
 			),
 		},
