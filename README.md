@@ -41,7 +41,9 @@ colorscheme octocolors
 
 colorscheme octocolors-dark
 colorscheme octocolors-dark-dimmed
+colorscheme octocolors-dark-high-contrast
 colorscheme octocolors-light
+colorscheme octocolors-light-high-contrast
 ```
 
 ```lua
@@ -70,7 +72,7 @@ When `theme` is set to `auto`, octocolors uses `vim.o.background` to select the 
 ```lua
 require("octocolors").setup({
 	background = "auto", -- May be "light", "dark" or "auto"
-	style = "default", -- May be "default" or "dimmed", currently only affects the dark theme
+	style = "default", -- May be "default", "dimmed" or "high_contrast", currently only affects the dark theme
 	styles = {
 		-- Customise the styling of certain syntax groups
 		-- All attr-list values for `:help nvim_set_hl` are valid
