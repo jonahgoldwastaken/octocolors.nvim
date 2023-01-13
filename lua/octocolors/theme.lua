@@ -452,9 +452,9 @@ function M.setup(scheme)
 		MasonHeaderSecondaryBold = { fg = co.bg.default, bg = co.blue, bold = true },
 
 		-- hop.nvim
-		HopNextKey = { fg = co.green2 },
-		HopNextKey1 = { fg = co.yellow },
-		HopNextKey2 = { fg = co.match },
+		HopNextKey = { fg = util.light_dark(scale.green[5], scale.green[3]) },
+		HopNextKey1 = { fg = util.light_dark(scale.yellow[5], scale.yellow[4]) },
+		HopNextKey2 = { fg = util.light_dark(scale.yellow[6], scale.yellow[6]) },
 	}
 
 	return theme
