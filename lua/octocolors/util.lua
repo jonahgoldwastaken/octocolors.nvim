@@ -1,7 +1,7 @@
 local M = {}
 
---- @return string "light" or "dark"
-function M.mode()
+---@return "light"|"dark"
+function M.background()
 	local background = require("octocolors.config").options.background
 	if background == "auto" then
 		return vim.o.background
@@ -10,7 +10,11 @@ function M.mode()
 	end
 end
 
-function M.light_dark(light, dark) return M.mode() == "light" and light or dark end
+---Select a colour based on the current background
+---@param light string colour used in light mode
+---@param dark string colour used in dark mode
+---@return string
+function M.light_dark(light, dark) return M.background() == "light" and light or dark end
 
 --- @param color string Hex color value
 --- @param bg string Neovim bg

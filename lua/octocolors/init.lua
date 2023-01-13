@@ -4,13 +4,13 @@ local theme = require("octocolors.theme")
 
 local M = {}
 
----@param style "dark.default"|"dark.dimmed"|"light.default"|nil
+---@param style "dark.default"|"dark.dimmed"|"dark.high_contrast"|"light.default"|"light.high_contrast"|nil
 function M._load(style)
 	if style and not M._style and M._background then
-		M._style = require("octocolors.config").options.style
+		M._style = require("octocolors.config").options.theme
 		M._background = require("octocolors.config").options.background
 	elseif not style and M._style and M._background then
-		require("octocolors.config").options.style = M._style
+		require("octocolors.config").options.theme = M._style
 		require("octocolors.config").options.background = M._background
 		M._style = nil
 		M._background = nil
@@ -25,7 +25,7 @@ end
 ---@param opts octocolors.config|nil
 function M.load(opts)
 	if opts then require("octocolors.config").extend(opts) end
-	util.load(theme.setup((opts and opts.style) or require("octocolors.config").options.style))
+	util.load(theme.setup((opts and opts.theme) or require("octocolors.config").options.theme))
 end
 
 M.setup = config.setup

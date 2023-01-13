@@ -15,7 +15,7 @@ local M = {}
 
 --- @alias Highlights table<string,Highlight>
 
---- @param scheme "default"|"dimmed"|nil
+--- @param scheme "default"|"dimmed"|"high_contrast"|nil
 --- @return Theme
 function M.setup(scheme)
 	scheme = scheme or "default"
@@ -31,7 +31,7 @@ function M.setup(scheme)
 
 	local c = theme.colors
 	if c == nil then
-		vim.notify("octocolors: invalid background option: " .. options.style, vim.log.levels.ERROR)
+		vim.notify("octocolors: invalid background option: " .. options.theme, vim.log.levels.ERROR)
 		return {}
 	end
 	local co = c.colors

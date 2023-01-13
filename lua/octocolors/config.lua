@@ -8,7 +8,7 @@ local M = {}
 
 ---@class octocolors.config
 ---@field background "auto"|"light"|"dark"
----@field style "default"|"dimmed" theme style, "dimmed only has an effect for the dark theme"
+---@field theme "default"|"dimmed"|"high_contrast" theme, "dimmed" only has an effect for the dark theme
 ---@field styles octocolors.syntax_styles
 ---@field sidebars table<string>
 ---@field lazy_load_syntax boolean
@@ -16,7 +16,7 @@ local M = {}
 ---@type octocolors.config
 local defaults = {
 	background = "auto", -- May be "light", "dark" or "auto"
-	style = "default", -- May be "default" or "dimmed", currently only affects the dark theme
+	theme = "default", -- May be "default" or "dimmed", currently only affects the dark theme
 	styles = {
 		-- Customise the styling of certain syntax groups
 		-- All attr-list values for `:help nvim_set_hl` are valid
