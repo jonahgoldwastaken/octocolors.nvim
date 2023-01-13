@@ -16,7 +16,10 @@ local function create_group(scale)
 	local group = {
 		a = { bg = util.light_dark(scale[6], scale[4]), fg = colors.colors.bg.statusline, gui = "bold" },
 		b = {
-			bg = util.light_dark(scale[7], scale[8]),
+			bg = util.high_contrast(
+				util.light_dark(scale[7], scale[8]),
+				util.light_dark(scale[9], scale[10])
+			),
 			fg = scale[1],
 		},
 		c = { bg = colors.colors.bg.statusline, fg = util.light_dark(scale[8], scale[1]) },
