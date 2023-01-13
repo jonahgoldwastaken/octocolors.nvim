@@ -1,4 +1,4 @@
-*octocolors.nvim.txt*      For Neovim >= 0.8      Last change: 2023 January 12
+*octocolors.nvim.txt*      For Neovim >= 0.8      Last change: 2023 January 13
 
 ==============================================================================
 Table of Contents                          *octocolors.nvim-table-of-contents*
