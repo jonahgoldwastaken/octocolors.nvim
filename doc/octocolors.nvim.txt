@@ -14,7 +14,12 @@ Table of Contents                          *octocolors.nvim-table-of-contents*
 ==============================================================================
 1. octocolors.nvim                          *octocolors.nvim-octocolors.nvim-*
 
-Aproper implementation of GitHub’s colour scheme for Neovim, written in Lua
+
+  **Warning**: Thistheme is still a work in progress. Thinks might break or not
+  look as expected.
+
+
+A proper implementation of GitHub’s colour scheme for Neovim, written in Lua
 and with support for several plugins.
 
 REQUIREMENTS                                    *octocolors.nvim-requirements*
