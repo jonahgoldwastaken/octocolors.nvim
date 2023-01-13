@@ -1,5 +1,8 @@
 # 🐙 octocolors.nvim 🐙
 
+> **Warning**:
+> This theme is still a work in progress. Thinks might break or not look as expected.
+
 A proper implementation of GitHub's colour scheme for Neovim, written in Lua and with support for several plugins.
 
 ## Requirements
