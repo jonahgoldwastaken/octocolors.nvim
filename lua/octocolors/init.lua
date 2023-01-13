@@ -24,7 +24,9 @@ end
 
 ---@param opts octocolors.config|nil
 function M.load(opts)
-	if opts then require("octocolors.config").extend(opts) end
+	if opts then
+		require("octocolors.config").extend(opts)
+	end
 	util.load(theme.setup((opts and opts.theme) or require("octocolors.config").options.theme))
 end
 

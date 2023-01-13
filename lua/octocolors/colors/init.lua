@@ -50,10 +50,14 @@ function M.setup()
 	local background = opts.background == "auto" and vim.o.background or opts.background
 	local style = opts.theme
 	local req_str = background .. "." .. style
-	if req_str == "light.dimmed" then req_str = "light.init" end
+	if req_str == "light.dimmed" then
+		req_str = "light.init"
+	end
 	req_str = req_str:gsub("default", "init")
 
-	if _colors[req_str] then return _colors[req_str] end
+	if _colors[req_str] then
+		return _colors[req_str]
+	end
 
 	---@type boolean, octocolors.scale
 	local p_ok, scale = pcall(require, "octocolors.colors." .. req_str)
@@ -223,6 +227,8 @@ function M.setup()
 	return _colors[req_str]
 end
 
-function M.get_colors() return _colors[_loaded_style] end
+function M.get_colors()
+	return _colors[_loaded_style]
+end
 
 return M

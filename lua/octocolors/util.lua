@@ -6,6 +6,7 @@ function M.background()
 	if background == "auto" then
 		return vim.o.background
 	else
+		---@cast background "light"|"dark"
 		return background
 	end
 end

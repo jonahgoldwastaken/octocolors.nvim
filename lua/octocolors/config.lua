@@ -32,7 +32,9 @@ local defaults = {
 M.options = {}
 
 --- @param opts octocolors.config|nil
-function M.setup(opts) M.options = vim.tbl_deep_extend("force", defaults, opts or {}) end
+function M.setup(opts)
+	M.options = vim.tbl_deep_extend("force", defaults, opts or {})
+end
 
 --- @param opts octocolors.config|nil
 function M.extend(opts)
