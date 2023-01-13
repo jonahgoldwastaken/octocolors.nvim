@@ -16,6 +16,43 @@ end
 ---@return string
 function M.light_dark(light, dark) return M.background() == "light" and light or dark end
 
+---Override a colour if the high_contrast theme is selected
+---@param default string Default colour
+---@param override string The overriding colour
+---@return string
+function M.high_contrast(default, override) return M.override("high_contrast", default, override) end
+
+---Only apply alpha if high_contrast is **not** selected
+---@param color string
+---@param bg string
+---@param alpha float 0-1
+---@param hc_color? string
+function M.hc_alpha(color, bg, alpha, hc_color)
+	if require("octocolors.config").options.theme == "high_contrast" then
+		if hc_color then
+			return hc_color
+		else
+			return color
+		end
+	else
+		return M.alpha(color, bg, alpha)
+	end
+end
+
+---Overrides a chosen color for a specific style
+---@param style string
+---@param default_color string
+---@param override any
+---@return any
+function M.override(style, default_color, override)
+	local current_style = require("octocolors.config").options.theme
+	if current_style == style then
+		return override
+	else
+		return default_color
+	end
+end
+
 --- @param color string Hex color value
 --- @param bg string Neovim bg
 --- @param alpha number 0-1

@@ -50,7 +50,7 @@ function M.setup(scheme)
 		CursorLine = { bg = co.bg.overlay }, -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
 		Directory = { fg = co.fg }, -- directory names (and other special names in listings)
 		DiffAdd = { bg = co.git.add.bg }, -- diff mode: Added line |diff.txt|
-		DiffChange = { bg = co.git.change.bg }, -- diff mode: Changed line |diff.txt|
+		DiffChange = { bg = co.git.change.fg }, -- diff mode: Changed line |diff.txt|
 		DiffDelete = { bg = co.git.delete.bg },
 		DiffText = { fg = co.whitespace }, -- diff mode: Changed text within a changed line |diff.txt|
 		EndOfBuffer = { fg = co.whitespace }, -- filler lines (~) after the end of the buffer.  By default, this is highlighted like |hl-NonText|.
@@ -61,8 +61,8 @@ function M.setup(scheme)
 		WinSeparator = { fg = co.border, bg = "NONE" }, -- the column separating vertically split windows
 		Folded = {}, -- line used for closed folds
 		FoldColumn = {}, -- 'foldcolumn'
-		SignColumn = { fg = light_dark(scale.gray[1], scale.gray[10]), bg = co.bg.overlay }, -- column where |signs| are displayed
-		SignColumnSB = { fg = light_dark(scale.gray[1], scale.gray[8]), bg = co.bg.default }, -- column where |signs| are displayed
+		SignColumn = { fg = light_dark(scale.gray[1], scale.gray[10]), bg = co.bg.default }, -- column where |signs| are displayed
+		SignColumnSB = { fg = light_dark(scale.gray[1], scale.gray[8]), bg = co.bg.sidebar }, -- column where |signs| are displayed
 		Substitute = { bg = light_dark(scale.yellow[5], scale.yellow[6]) }, -- |:substitute| replacement text highlighting
 		LineNr = { fg = scale.gray[5] }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		CursorLineNr = { fg = co.fg }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
@@ -78,7 +78,7 @@ function M.setup(scheme)
 		NormalFloat = { fg = co.fg, bg = co.bg.overlay }, -- Normal text in floating windows.
 		FloatBorder = { fg = co.border, bg = co.bg.overlay },
 		Pmenu = { fg = co.fg, bg = co.bg.overlay }, -- Popup menu: normal item.
-		PmenuSel = { fg = co.bg.default, bg = co.selection }, -- Popup menu: selected item.
+		PmenuSel = { bg = co.selection.bg }, -- Popup menu: selected item.
 		PmenuSbar = { bg = co.bg.overlay }, -- Popup menu: scrollbar.
 		PmenuThumb = { bg = alpha(scale.gray[5], co.bg.overlay, 0.2) }, -- Popup menu: Thumb of the scrollbar.
 		Question = { fg = co.blue }, -- |hit-enter| prompt and yes/no questions
@@ -98,7 +98,7 @@ function M.setup(scheme)
 		TabLineSel = { link = "PmenuSel" }, -- tab pages line, active tab page label
 		Title = { fg = co.blue2, bold = true }, -- titles for output from ":set all", ":autocmd" etc.
 		["@text.title"] = { fg = co.fg },
-		Visual = { fg = co.bg.default, bg = co.selection }, -- Visual mode selection
+		Visual = { fg = co.visual.fg, bg = co.visual.bg }, -- Visual mode selection
 		VisualNOS = { link = "Visual" }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = co.yellow }, -- warning messages
 		Whitespace = { fg = co.whitespace }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
@@ -278,9 +278,9 @@ function M.setup(scheme)
 		NvimTreeNormal = { fg = co.fg, bg = co.bg.sidebar },
 		NvimTreeEndOfBuffer = { fg = co.bg.sidebar },
 		NvimTreeRootFolder = { fg = co.fg, bold = true },
-		NvimTreeGitDirty = { fg = co.yellow },
+		NvimTreeGitDirty = { fg = co.git.change.fg },
 		NvimTreeGitNew = { fg = co.git.add.fg },
-		NvimTreeGitRenamed = { fg = co.yellow },
+		NvimTreeGitRenamed = { fg = co.git.change.fg },
 		NvimTreeGitDeleted = { fg = co.git.delete.fg },
 		NvimTreeGitIgnored = { fg = co.fg },
 		NvimTreeSpecialFile = { fg = scale.yellow[4], underline = true },
@@ -298,9 +298,9 @@ function M.setup(scheme)
 		NeoTreeNormalNC = { fg = co.fg, bg = co.bg.sidebar },
 		NeoTreeEndOfBuffer = { fg = co.bg.sidebar },
 		NeoTreeRootName = { fg = co.fg, bold = true },
-		NeoTreeGitModified = { fg = co.yellow },
+		NeoTreeGitModified = { fg = co.git.change.fg },
 		NeoTreeGitAdded = { fg = co.git.add.fg },
-		NeoTreeGitRenamed = { fg = co.yellow },
+		NeoTreeGitRenamed = { fg = co.git.change.fg },
 		NeoTreeGitDeleted = { fg = co.git.delete.fg },
 		NeoTreeGitIgnored = { fg = co.comment },
 		NeoTreeDimText = { fg = co.comment },
@@ -314,14 +314,16 @@ function M.setup(scheme)
 		NeoTreeExpander = { fg = co.fg },
 
 		-- GitGutter
-		GitGutterAdd = { fg = co.git.add.fg },
-		GitGutterChange = { fg = co.yellow },
-		GitGutterDelete = { fg = co.git.delete.fg },
+		GitGutterAdd = { fg = co.git.add.gutter },
+		GitGutterChange = { fg = co.git.change.gutter },
+		GitGutterDelete = { fg = co.git.delete.gutter },
 
 		-- GitSigns
-		GitSignsAdd = { fg = co.git.add.fg },
-		GitSignsChange = { fg = co.yellow },
-		GitSignsDelete = { fg = co.git.delete.fg },
+		GitSignsAdd = { fg = co.git.add.gutter },
+		GitSignsAddLn = { bg = co.git.add.line },
+		GitSignsChange = { fg = co.git.change.gutter },
+		GitSignsChangeLn = { bg = co.git.change.line },
+		GitSignsDelete = { fg = co.git.delete.gutter },
 
 		-- Telescope
 		TelescopeBorder = {
@@ -334,12 +336,14 @@ function M.setup(scheme)
 		},
 		TelescopeTitle = { fg = co.fg },
 		TelescopePromptPrefix = { fg = co.fg },
+		TelescopeSelection = { fg = co.fg, bg = co.selection.bg },
+		TelescopeMatching = { fg = co.selection.match },
 
 		-- nvim-cmp
 		CmpDocumentation = { link = "NormalFloat" },
 		CmpDocumentationBorder = { link = "FloatBorder" },
 		CmpItemAbbrDeprecated = { fg = co.comment, strikethrough = true },
-		CmpItemAbbrMatch = { fg = co.blue },
+		CmpItemAbbrMatch = { fg = co.selection.match },
 		CmpItemAbbr = { fg = co.fg },
 		CmpItemAbbrMatchFuzzy = { link = "CmpItemAbbrMatch" },
 		CmpItemMenu = { link = "CmpItemAbbrDefault" },
